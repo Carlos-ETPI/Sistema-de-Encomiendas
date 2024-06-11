@@ -1,0 +1,22 @@
+.custom-color {
+    background-color: 	#DCDCDC;
+    color: #ffffff; 
+}
+
+.mar{
+    margin-bottom:-5% ;
+}
+.nav-link i {
+    color: blue; 
+}
+.nav-link {
+    color: blue; 
+}
+
+.nav-link:hover i,
+.nav-link:hover {
+    color: red;
+}
+.size-icon{
+    font-size: 24px;
+}
