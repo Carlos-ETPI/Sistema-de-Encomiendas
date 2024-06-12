@@ -6,3 +6,6 @@ def Prueba(request):
 
 def crud(request):
     return render(request,'moduloSeguridad/crud.html')
+
+def registro(request):
+    return render(request,'moduloSeguridad/registro.html')
