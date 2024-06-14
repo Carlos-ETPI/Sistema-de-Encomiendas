@@ -64,5 +64,7 @@ def verUsuario(request, pk):
 #eliminar
 def eliminar_usuario(request, pk):
     user = get_object_or_404(CustomUser, idUsuario=pk)
-    user.delete()
-    return redirect('/usuarios/')
+    if request.method == 'POST':
+        user.delete()
+        return redirect('/usuarios/')
+    return render(request, 'moduloUsuarios/eliminarUsuario.html',{'user':user})
