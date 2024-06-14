@@ -61,6 +61,11 @@ def verUsuario(request, pk):
     user = get_object_or_404(CustomUser, idUsuario=pk)
     return render(request, 'moduloUsuarios/modificar.html',{'user':user})
 
+#verificar usuario
+def datosUsuario(request, pk):
+    user = get_object_or_404(CustomUser, idUsuario=pk)
+    return render(request, 'moduloUsuarios/verificarUsuario.html',{'user':user} )
+
 #eliminar
 def eliminar_usuario(request, pk):
     user = get_object_or_404(CustomUser, idUsuario=pk)
