@@ -2,7 +2,7 @@
 env/
 venv/
 karlaenv/
-SistemaEncomiendas/SistemaEncomiendas/_pycache_/
+SistemaEncomiendas\SistemaEncomiendas\_pycache_\
 SistemaEncomiendas/aplicaciones/moduloSeguridad/_pycache_/
 SistemaEncomiendas/aplicaciones/moduloSeguridad/migrations/_pycache_/
 SistemaEncomiendas/aplicaciones/moduloUsuarios/_pycache_/
