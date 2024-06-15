@@ -2,6 +2,17 @@
 {% load static %}
 {% load widget_tweaks %}
 {% block body %}
+
+{% if messages %}
+  {% for message in messages %}
+      <div class="alert alert-danger"><b>{{ message }}</b></div>
+  {% endfor %}
+  <script>
+    setTimeout(function() {
+        document.querySelector('.alert').classList.add('d-none');
+    }, 5000);
+</script>
+{% endif %}
 <section class="vh-100" >
     <div class="container py-5 " >
         <div class="row d-flex justify-content-center  h-100"  >

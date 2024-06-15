@@ -52,13 +52,15 @@
                             Customers
                         </a>
                     </li>
-                    
+                    {% if user.is_authenticated  %}
                     <li >
                         <a href="{%url 'seguridad_app:logout'%}" class="nav-link text-blue d-flex flex-column align-items-center">
                             <i class="bi bi-box-arrow-right  mx-auto mb-1 " style="font-size: 24px;"></i>
                             Salir
                         </a>
                     </li>
+                    {% endif %}
+                    
                     
                 </ul>
             </div>

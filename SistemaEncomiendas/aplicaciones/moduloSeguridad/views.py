@@ -8,7 +8,8 @@ from django.contrib import messages
 
 
 # Create your views here.
-
+def no_access_view(request):
+    return render(request, 'moduloSeguridad/accesoDen.html')
 
 def crud(request):
     return render(request,'moduloSeguridad/crud.html')
@@ -32,7 +33,7 @@ class LoginUser(FormView):
             return redirect(self.success_url)
         else:
                 messages.add_message(self.request, messages.WARNING,'Error: credenciales incorrectas ')
-                return redirect(reverse_lazy('login_app:login'))
+                return redirect(reverse_lazy('seguridad_app:inicio_sesion'))
 
 def cerrar_sesion(request):
     logout(request)
