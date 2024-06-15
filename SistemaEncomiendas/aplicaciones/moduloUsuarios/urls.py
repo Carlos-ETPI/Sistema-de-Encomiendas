@@ -9,4 +9,13 @@ urlpatterns = [
     path('InformacionUsuario/<int:pk>/',views.datosUsuario, name="datosUsuario"),
     path('modificar/',views.modUsuario, name="moduser"),
     path('eliminar/<int:pk>/', views.eliminar_usuario, name='eliminar_usuario'),
+    
+    #Modulo de Gestion de Cliente 
+    path('crudCliente/', views.crudClientes, name="crudClientes"),
+    path('crearCliente/',views.agrClientes, name="agrCliente"),
+    path('modificarCliente/',views.modClientes, name="modCliente"),
+    path('eliminarCliente/',views.delCliente, name="delCliente"),
+    path('verificarCliente/',views.verifCliente, name="verifCliente"),
+    path('verCliente/',views.verCliente, name="verCliente"),
+    
 ]
