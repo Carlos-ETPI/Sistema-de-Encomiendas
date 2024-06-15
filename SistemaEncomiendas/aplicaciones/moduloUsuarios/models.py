@@ -1,3 +1,4 @@
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -8,3 +9,4 @@ class CustomUser(AbstractUser):
     dui = models.CharField(max_length=10, blank=True, null=False, unique=True)
     activo = models.BooleanField(default=True)
     telefono =  models.CharField(max_length=10, blank=True, null=False)
+

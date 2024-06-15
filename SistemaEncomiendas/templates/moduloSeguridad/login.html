@@ -1,6 +1,18 @@
 {% extends "base3.html" %}
 {% load static %}
+{% load widget_tweaks %}
 {% block body %}
+
+{% if messages %}
+  {% for message in messages %}
+      <div class="alert alert-danger"><b>{{ message }}</b></div>
+  {% endfor %}
+  <script>
+    setTimeout(function() {
+        document.querySelector('.alert').classList.add('d-none');
+    }, 5000);
+</script>
+{% endif %}
 <section class="vh-100" >
     <div class="container py-5 " >
         <div class="row d-flex justify-content-center  h-100"  >
@@ -14,8 +26,8 @@
                         <div class="col-md-6 col-lg-7 d-flex align-items-center " style="background-color: #F5F0EF;border-radius: 0 1rem 1rem 0; "><!--form-->
                             <div class="card-body p-4 p-lg-5 text-black" >
 
-                                <form >
-
+                                <form method="post">
+                                    {% csrf_token %}
                                     <div class="d-flex flex-wrap align-items-center mb-3 pb-1" >
                                             <img src="{% static 'img/logo.png' %}"  alt="Example Image "  >
                                     </div>
@@ -23,17 +35,19 @@
                                     <h5 class="fw-normal mb-3 pb-3 " style="letter-spacing: 1px; ;"><b>inicia sesion en tu cuenta</b> </h5>
 
                                     <div class="form-floating mb-4" >
-                                        <input type="email" id="form2Example17" class="form-control form-control-lg" required/>
+                                    
+                                        {{ form.username |add_class:"form-control form-control-lg"| attr:"{'id':'form2Example17,'placeholder':'Usuario'}"}}
                                         <label class="form-label" for="form2Example17">Usuario</label>
                                     </div>
 
                                     <div class="form-floating mb-4">
-                                        <input type="password" id="form2Example27" class="form-control form-control-lg" placeholder="" required/>
+                                        
+                                        {{ form.password |add_class:"form-control form-control-lg"| attr:"{'id':'form2Example17,'placeholder':'Usuario'}"}}
                                         <label class="form-label" for="form2Example27">Contraseña</label>
                                     </div>
 
                                     <div class="pt-1 mb-4">
-                                        <button class="btn btn-success btn-lg btn-block" type="button">Login</button>
+                                        <button class="btn btn-success btn-lg btn-block" type="submit">Login</button>
                                     </div>
 
                                     <a class="small text-muted" href="#!">¿Olvido su contraseña?</a>
