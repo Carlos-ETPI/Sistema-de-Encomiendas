@@ -90,3 +90,27 @@ def eliminar_usuario(request, pk):
     user.delete()
     return redirect('/usuarios/')
 
+#Vistas para el submodulo de usuarios Gestion de Clientes 
+#vista de crud Clientes
+def crudClientes(request):
+    return render(request,'moduloUsuarios/crudCliente.html')
+
+def agrClientes(request):
+    return render(request,'moduloUsuarios/crearCliente.html')
+
+#Vista de formulario para agregar usuario
+def modClientes(request):
+    return render(request,'moduloUsuarios/modificarCliente.html')
+
+#verificar cliente
+def verifCliente(request):
+    return render(request, 'moduloUsuarios/verificarCliente.html')
+
+#eliminar
+def delCliente(request):
+
+    return render(request, 'moduloUsuarios/eliminarCliente.html')
+
+#vista para ver usuario
+def verCliente(request):
+    return render(request, 'moduloUsuarios/verCliente.html')
