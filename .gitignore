@@ -1,0 +1,6 @@
+_pycache_/
+.env
+env/
+venv/
+karlaenv/
+**/migrations/
