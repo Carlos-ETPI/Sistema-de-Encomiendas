@@ -74,6 +74,9 @@
                     <a href="{% url 'moduloUsuarios:verUsuario' user.idUsuario%}" class="text-sucess mx-auto mx-2" style="font-size: 20px;">
                         <i class="fas fa-user-edit"></i>
                     </a>
+                    <a href="{% url 'moduloUsuarios:inspeccionarUsuario' user.idUsuario%}" class="text-sucess mx-auto mx-2" style="font-size: 20px;">
+                        <i class="fa fa-id-card" aria-hidden="true"></i>
+                    </a>
                     <a href="{% url 'moduloUsuarios:eliminar_usuario' user.idUsuario %}" class="text-danger mx-auto mx-2" style="font-size: 20px;">
                         <i class="fas fa-trash-alt" ></i>
                     </a>

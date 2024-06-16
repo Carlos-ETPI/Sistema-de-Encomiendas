@@ -6,6 +6,7 @@ urlpatterns = [
     path('agregar/',views.newuser, name="agregar"),
     path('create/',views.agregarUsuario, name="newuser"),
     path('ver/<int:pk>/',views.verUsuario, name="verUsuario"),
+    path('inspeccionarUsuario/<int:pk>/',views.inspeccionarUsuario, name="inspeccionarUsuario"),
     path('modificar/',views.modUsuario, name="moduser"),
     path('eliminar/<int:pk>/', views.eliminar_usuario, name='eliminar_usuario'),
     
