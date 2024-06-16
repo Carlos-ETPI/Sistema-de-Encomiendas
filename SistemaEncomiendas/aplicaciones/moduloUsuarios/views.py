@@ -9,6 +9,8 @@ from django.contrib import messages
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 CustomUser = get_user_model()
+from .models import ClienteForm
+
 
 # Create your views here.
 from django.contrib.auth.decorators import login_required
@@ -216,22 +218,100 @@ def home(request):
 
 #Vistas para el submodulo de usuarios Gestion de Clientes 
 #vista de crud Clientes
-def crudClientes(request):
-    return render(request,'moduloUsuarios/crudCliente.html')
 
-def agrClientes(request):
-    return render(request,'moduloUsuarios/crearCliente.html')
 
-#Vista de formulario para agregar usuario
-def modClientes(request):
+def crudCliente(request):
+
+    return render(request, 'moduloUsuarios/crudCliente.html')
+
+#vista agregarCliente 
+def agregarClientes(request):
+    if request.method == 'POST':
+        # Recuperar los datos del formulario
+        nombreCliente = request.POST['nombres']
+        apellidoCliente = request.POST['apellidos']
+        duiCliente = request.POST['dui']
+        nacionalidadCliente= request.POST['nacionalidad']
+        telefonoCliente = request.POST.get('telefono')
+        emailCliente = request.POST['email']
+  
+
+        #validaciones adicionales
+        #No campos vacios
+        if not duiCliente or not telefonoCliente or not emailCliente:
+            messages.error(request, 'Por favor complete todos los campos obligatorios')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+        
+        
+        #verificar que el dui es unico
+        if ClienteForm.objects.filter(duiCliente=duiCliente).exists():
+            messages.error(request, 'Error al ingresar documento de identidad, el numero ingresado ya esta registrado')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+        
+        #verificar email
+       # if ClienteForm.objects.filter(emailCliente=emailCliente).exists():
+        #    messages.error(request, 'La direccion de correo electronica ya esta en uso, por favor ingrese otro email')
+         #   return render(request, 'moduloUsuarios/crearCliente.html')
+        
+        #validacion del formato del email
+        try:
+            validate_email(emailCliente)
+        except ValidationError:
+            messages.error(request,'El formato del correo electrónico no es valido')
+            return render(request, 'moduloUsuarios/crearCliente.html')    
+        
+        #validacion de parametros
+        if len(nombreCliente) > 50:
+            messages.error(request, 'Nombres demasiado extensos, trate de usar abreviaciones como: David G. Aguilar')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+        
+        if len(apellidoCliente) > 50:
+            messages.error(request, 'Apellidos demasiado extensos, trate de usar abreviaciones como: G. Aguilar')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+        
+        if len(duiCliente) != 10:
+            messages.error(request, 'Numero de documento de identidad no valido')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+        
+        
+        if len(nacionalidadCliente) >50:
+            messages.error(request, 'La nacionalidad de residencia debe tener menos de 50 caracteres')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+        
+        if len(telefonoCliente) != 9:
+            messages.error(request, 'Numero de telefono no valido')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+        
+  
+        try:
+            #creacion de usuario
+            cliente = ClienteForm.objects.crear_Cliente(
+            nombreCliente=nombreCliente,
+            apellidoCliente=apellidoCliente,
+            duiCliente=duiCliente,
+            nacionalidadCliente=nacionalidadCliente,
+            telefonoCliente=telefonoCliente,
+            emailCliente=emailCliente
+            )
+            return redirect('/usuarios/crudCliente')  # o cualquier otra página después del registro
+        except Exception as e:
+            messages.error(request, f'Error al crear el Cliente: {str(e)}')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+    else:
+        return render(request, 'moduloUsuarios/crearCliente.html')
+
+
+#Vista de formulario para modificar cliente
+def modificarClientes(request):
+
     return render(request,'moduloUsuarios/modificarCliente.html')
 
 #verificar cliente
-def verifCliente(request):
+def verificarCliente(request):
     return render(request, 'moduloUsuarios/verificarCliente.html')
 
 #eliminar
-def delCliente(request):
+def deleteCliente(request):
 
     return render(request, 'moduloUsuarios/eliminarCliente.html')
 
