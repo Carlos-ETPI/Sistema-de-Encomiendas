@@ -3,6 +3,7 @@ from . import views
 app_name = 'moduloUsuarios'
 urlpatterns = [
     path('',views.crudUsuarios, name="users"),
+    path('home/',views.home),
     path('agregar/',views.newuser, name="agregar"),
     path('create/',views.agregarUsuario, name="newuser"),
     path('ver/<int:pk>/',views.verUsuario, name="verUsuario"),

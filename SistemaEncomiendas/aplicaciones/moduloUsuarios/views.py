@@ -184,6 +184,8 @@ def eliminar_usuario(request, pk):
         return redirect('/usuarios/')
     return render(request,'moduloUsuarios/eliminarUsuario.html',{'user':user})
     
+def home(request):
+    return render(request,'home.html')
 
 #Vistas para el submodulo de usuarios Gestion de Clientes 
 #vista de crud Clientes
