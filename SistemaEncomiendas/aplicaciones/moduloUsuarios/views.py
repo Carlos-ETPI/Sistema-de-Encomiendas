@@ -6,6 +6,8 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.contrib import messages
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 CustomUser = get_user_model()
 
 # Create your views here.
@@ -26,7 +28,7 @@ def group_required(group_name):
 #Vista de crud de usuarios
 @group_required('Jefe')
 def crudUsuarios(request):
-    user_list = CustomUser.objects.filter(is_superuser=False).order_by('date_joined')
+    user_list = CustomUser.objects.filter(is_superuser=False, is_active=True).order_by('date_joined')
     return render(request, 'moduloUsuarios/crud.html', {'user_list': user_list})
 
 #Vista de formulario para agregar usuario
@@ -54,10 +56,22 @@ def agregarUsuario(request):
             messages.error(request, 'Este nombre de usuario ya existe, por favor ingrese uno distinto')
             return render(request, 'moduloUsuarios/crear.html')
         
+        #verificar que el dui es unico
+        if CustomUser.objects.filter(dui=dui).exists():
+            messages.error(request, 'Error al ingresar documento de identidad, el numero ingresado ya esta registrado')
+            return render(request, 'moduloUsuarios/crear.html')
+        
         #verificar emial
         if CustomUser.objects.filter(email=email).exists():
             messages.error(request, 'La direccion de correo electronica ya esta en uso, por favor ingrese otro email')
             return render(request, 'moduloUsuarios/crear.html')
+        
+        #validacion del formato del email
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request,'El formato del correo electrónico no es valido')
+            return render(request, 'moduloUsuarios/crear.html')    
         
         #validacion de parametros
         if len(nombres) > 50:
@@ -68,14 +82,19 @@ def agregarUsuario(request):
             messages.error(request, 'Apellidos demasiado extensos, trate de usar abreviaciones como: G. Aguilar')
             return render(request, 'moduloUsuarios/crear.html')
         
-        if len(dui) > 10:
+        if len(dui) != 10:
             messages.error(request, 'Numero de documento de identidad no valido')
             return render(request, 'moduloUsuarios/crear.html')
         
-        if len(telefono) > 10:
+        if len(telefono) != 9:
             messages.error(request, 'Numero de telefono no valido')
             return render(request, 'moduloUsuarios/crear.html')
         
+        #longitud de contraseña
+        if len(password) <8:
+            messages.error(request, 'La contraseña debe tener al menos 8 caracteres')
+            return render(request, 'moduloUsuarios/crear.html')
+
         #validacion de contraseñas
         if password != password2:
             messages.error(request, 'Las contraseñas no coinciden')
@@ -137,6 +156,13 @@ def modUsuario(request):
             messages.error(request, 'La direccion de correo electronica ya esta en uso, por favor ingrese otro email')
             return render(request, 'moduloUsuarios/modificar.html', {'user': user})
         
+        #validacion del formato del email
+        try:
+            validate_email(user.email)
+        except ValidationError:
+            messages.error(request,'El formato del correo electrónico no es valido')
+            return render(request, 'moduloUsuarios/modificar.html',{'user':user})
+        
         #validacion de parametros
         if len(user.nombres) > 50:
             messages.error(request, 'Nombres demasiado extensos, trate de usar abreviaciones como: David G. Aguilar')
@@ -146,11 +172,11 @@ def modUsuario(request):
             messages.error(request, 'Apellidos demasiado extensos, trate de usar abreviaciones como: G. Aguilar')
             return render(request, 'moduloUsuarios/modificar.html', {'user': user})
         
-        if len(user.dui) > 10:
+        if len(user.dui) != 10:
             messages.error(request, 'Numero de documento de identidad no valido')
             return render(request, 'moduloUsuarios/modificar.html', {'user': user})
         
-        if len(user.telefono) > 10:
+        if len(user.telefono) != 9:
             messages.error(request, 'Numero de telefono no valido')
             return render(request, 'moduloUsuarios/modificar.html', {'user': user})
         
@@ -180,7 +206,8 @@ def inspeccionarUsuario(request, pk):
 def eliminar_usuario(request, pk):
     user = get_object_or_404(CustomUser, idUsuario=pk)
     if request.method == 'POST':
-        user.delete()
+        user.is_active = False
+        user.save()
         return redirect('/usuarios/')
     return render(request,'moduloUsuarios/eliminarUsuario.html',{'user':user})
     
