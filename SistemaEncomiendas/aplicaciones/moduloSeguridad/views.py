@@ -5,6 +5,8 @@ from django.views.generic import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate,logout
 from django.contrib import messages
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 
 # Create your views here.
@@ -38,3 +40,19 @@ class LoginUser(FormView):
 def cerrar_sesion(request):
     logout(request)
     return redirect(reverse_lazy('seguridad_app:CRUD'))
+
+class ChangePasswordView(FormView):
+    template_name = 'moduloseguridad/cambiarContraseña.html'
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy('seguridad_app:CRUD')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        user = form.save()
+        update_session_auth_hash(self.request, user)  
+        messages.success(self.request, 'Tu contraseña ha sido actualizada correctamente.')
+        return super().form_valid(form)

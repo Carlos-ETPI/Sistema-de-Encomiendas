@@ -4,14 +4,11 @@
 {% block body %}
 
 {% if messages %}
-  {% for message in messages %}
-      <div class="alert alert-danger"><b>{{ message }}</b></div>
-  {% endfor %}
-  <script>
-    setTimeout(function() {
-        document.querySelector('.alert').classList.add('d-none');
-    }, 5000);
-</script>
+    {% for message in messages %}
+        <div class="alert alert-danger"><b>{{ message }}</b></div>
+    {% endfor %}
+
+    
 {% endif %}
 <section class="vh-100" >
     <div class="container py-5 " >
@@ -36,13 +33,14 @@
 
                                     <div class="form-floating mb-4" >
                                     
-                                        {{ form.username |add_class:"form-control form-control-lg"| attr:"{'id':'form2Example17,'placeholder':'Usuario'}"}}
+                                        {{ form.username | add_class:"form-control form-control-lg" | attr:"autocomplete=off,id=form2Example17,placeholder='Usuario'" }}
+
                                         <label class="form-label" for="form2Example17">Usuario</label>
                                     </div>
 
                                     <div class="form-floating mb-4">
                                         
-                                        {{ form.password |add_class:"form-control form-control-lg"| attr:"{'id':'form2Example17,'placeholder':'Usuario'}"}}
+                                        {{ form.password |add_class:"form-control form-control-lg"| attr:"{'id':'form2Example17,'placeholder':'Usuario','autocomplete':'off'}"}}
                                         <label class="form-label" for="form2Example27">Contraseña</label>
                                     </div>
 
@@ -50,7 +48,7 @@
                                         <button class="btn btn-success btn-lg btn-block" type="submit">Login</button>
                                     </div>
 
-                                    <a class="small text-muted" href="#!">¿Olvido su contraseña?</a>
+                                
                                     
                                 </form>
 
@@ -62,5 +60,5 @@
         </div>
     </div>
 </section>
-
+<script src="{%static 'js/ValidacionNoVacio.js'%}"></script>
 {% endblock body %}
