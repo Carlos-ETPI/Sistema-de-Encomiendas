@@ -18,7 +18,7 @@
         <div class="col-md-6  mb-1">
             
             <div class="d-flex justify-content-end   ">
-                <a href="/usuarios/crearCliente/">
+                <a href="/usuarios/agregarCliente">
                 <button type="button" class="btn btn-secondary mt-1">
                     <i class="fas fa-plus-circle"></i>  Agregar
                 </button>
@@ -63,7 +63,7 @@
             </tr>
         </thead>
         <tbody>
-            {%for cliente in cliente_list %}
+            {%for cliente in client_list %}
             <tr >
                 <td>{{cliente.idCliente}}</td>
                 <td>{{cliente.nombreCliente}}</td>
@@ -71,13 +71,13 @@
                 <td>{{cliente.duiCliente}}</td>
                 <td>{{cliente.telefonoCliente}}</td>
                 <td class="d-flex justify-content-center">
-                    <a href="{% url 'moduloUsuarios:verCliente' cliente.idCliente%}" class="text-sucess mx-auto mx-2" style="font-size: 20px;">
+                    <a href="{% url 'moduloUsuarios:inspeccionarCliente' cliente.idCliente%}" class="text-sucess mx-auto mx-2" style="font-size: 20px;">
                         <i class="fas fa-file-alt"></i>
                     </a>
-                    <a href="{% url 'moduloUsuarios:modificarCliente' cliente.idCliente%}" class="text-sucess mx-auto mx-2" style="font-size: 20px;">
+                    <a href="{% url 'moduloUsuarios:verCliente' cliente.idCliente%}" class="text-sucess mx-auto mx-2" style="font-size: 20px;">
                         <i class="fas fa-user-edit" aria-hidden="true"></i>
                     </a>
-                    <a href="{% url 'moduloUsuarios:eliminarCliente' cliente.idCliente %}" class="text-danger mx-auto mx-2" style="font-size: 20px;">
+                    <a href="{% url 'moduloUsuarios:deleteCliente' cliente.idCliente %}" class="text-danger mx-auto mx-2" style="font-size: 20px;">
                         <i class="fas fa-trash-alt" ></i>
                     </a>
                 </td>

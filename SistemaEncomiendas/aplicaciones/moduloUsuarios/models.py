@@ -18,5 +18,6 @@ class ClienteForm(models.Model):
     duiCliente=models.CharField(max_length=10,blank=True, null=False)
     nacionalidadCliente=models.CharField(max_length=50,blank=True, null=False)
     telefonoCliente=models.CharField(max_length=10,blank=True, null=False)
-    #emailCliente=models.CharField(max_length=50,blank=True, null=False)
+    emailCliente=models.CharField(max_length=50,blank=True, null=False)
+    estado = models.BooleanField('estado', default=True)
     

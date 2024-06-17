@@ -36,14 +36,14 @@
                         <div class="col d-flex align-items-center " style="background-color: #F5F0EF;border-radius: 1rem 1rem 1rem 1rem; "><!--form-->
                             <div class="card-body p-4 p-lg-5 text-black d-flex justify-content-center align-items-center" >
                                 
-                                <form class="w-75" method="POST">
+                                <form class="w-75" >
                                     {% csrf_token %}
                                     <h5 class="fw-normal  mb-3 pb-3 " style="letter-spacing: 1px; ;"><b>Información del Cliente</b> </h5>
                                     <hr>
                                     
                                     <div class="input-group input-group mb-3">
                                         <span class="input-group-text" id="inputGroup-sizing-sm"><b>Nombres: </b></span>
-                                        <input type="text" disabled value="{{clientes.nombrecliente}}" name="nombres" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Juan Antonio">
+                                        <input type="text" disabled value="{{cliente.nombrecliente}}" name="nombres" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Juan Antonio">
                                     </div>
                                     <div class="input-group input-group mb-3">
                                         <span class="input-group-text" id="inputGroup-sizing-sm"><b>Apellidos: </b></span>
@@ -63,7 +63,7 @@
                                     </div>
                                     <div class="input-group input-group mb-3">
                                         <span class="input-group-text" id="inputGroup-sizing-sm"><b>Email: </b></span>
-                                        <input type="text" disabled value="{{clinete.emailCliente}}" name="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="pp24007007@gmail.com">
+                                        <input type="text" disabled value="{{cliente.emailCliente}}" name="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="pp24007007@gmail.com">
 
                                 </form>
 
