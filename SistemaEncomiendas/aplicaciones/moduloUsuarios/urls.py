@@ -12,11 +12,12 @@ urlpatterns = [
     
      #Modulo de Gestion de Cliente 
     path('crudCliente/', views.crudCliente, name="crudCliente"),
+    path('agregarCliente/',views.newCliente, name="newCliente"),
     path('crearCliente/',views.agregarClientes, name="agregarCliente"),
     path('modificarCliente/',views.modificarClientes, name="modificarCliente"),
-    path('eliminarCliente/',views.deleteCliente, name="deleteCliente"),
-    path('verificarCliente/',views.verificarCliente, name="verificarCliente"),
-    path('verCliente/',views.verCliente, name="verCliente"),
+    path('eliminarCliente/<int:pk>',views.deleteCliente, name="deleteCliente"),
+    path('inspeccionarCliente/<int:pk>',views.verificarCliente, name="inspeccionarCliente"),
+    path('verCliente/<int:pk>',views.verCliente, name="verCliente"),
 
 
 
