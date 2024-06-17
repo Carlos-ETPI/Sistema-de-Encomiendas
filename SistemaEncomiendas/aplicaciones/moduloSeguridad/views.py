@@ -5,6 +5,8 @@ from django.views.generic import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate,logout
 from django.contrib import messages
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 
 # Create your views here.
@@ -19,11 +21,14 @@ def registro(request):
 
 class LoginUser(FormView):
     form_class = LoginForm
-    success_url = reverse_lazy('moduloUsuarios:users')
+    success_url = reverse_lazy('seguridad_app:home')
     template_name = 'moduloSeguridad/login.html'
     def form_valid(self, form):
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
         credenciales = form.cleaned_data
         user = authenticate(username=credenciales['username'],password=credenciales['password'])
+        
         
         if user is not None:
             login(self.request, user)
@@ -34,7 +39,28 @@ class LoginUser(FormView):
         else:
                 messages.add_message(self.request, messages.WARNING,'Error: credenciales incorrectas ')
                 return redirect(reverse_lazy('seguridad_app:inicio_sesion'))
+            
+        
 
 def cerrar_sesion(request):
     logout(request)
-    return redirect(reverse_lazy('seguridad_app:CRUD'))
+    return render(request,'home2.html')
+
+class ChangePasswordView(FormView):
+    template_name = 'moduloseguridad/cambiarContraseña.html'
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy('seguridad_app:home')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        user = form.save()
+        update_session_auth_hash(self.request, user)  
+        messages.success(self.request, 'Tu contraseña ha sido actualizada correctamente.')
+        return super().form_valid(form)
+
+def home(request):
+    return render(request,'home2.html')
