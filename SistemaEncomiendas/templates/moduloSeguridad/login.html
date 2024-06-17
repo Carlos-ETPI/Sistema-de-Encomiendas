@@ -30,17 +30,28 @@
                                     </div>
 
                                     <h5 class="fw-normal mb-3 pb-3 " style="letter-spacing: 1px; ;"><b>inicia sesion en tu cuenta</b> </h5>
-
+                                    <div class="">
+                                    {% if form.errors %}
+                                        {% for field in form  %}
+                                            {% if field.errors %}
+                                                {% for error in field.errors  %}
+                                                <li class="text-danger "><b>{{error|escape}}</b></li>
+                                                {% endfor %}
+                                            
+                                            {% endif %}
+                                        {% endfor %} 
+                                    {% endif %}
+                                </div>
                                     <div class="form-floating mb-4" >
                                     
-                                        {{ form.username | add_class:"form-control form-control-lg" | attr:"autocomplete=off,id=form2Example17,placeholder='Usuario'" }}
+                                        {{ form.username | add_class:"form-control form-control-lg" | attr:"autocomplete=off,placeholder='Usuario'" }}
 
                                         <label class="form-label" for="form2Example17">Usuario</label>
                                     </div>
 
                                     <div class="form-floating mb-4">
                                         
-                                        {{ form.password |add_class:"form-control form-control-lg"| attr:"{'id':'form2Example17,'placeholder':'Usuario','autocomplete':'off'}"}}
+                                        {{ form.password |add_class:"form-control form-control-lg"| attr:"{'placeholder':'Usuario','autocomplete':'off'}"}}
                                         <label class="form-label" for="form2Example27">Contraseña</label>
                                     </div>
 
@@ -61,4 +72,5 @@
     </div>
 </section>
 <script src="{%static 'js/ValidacionNoVacio.js'%}"></script>
+<script src="{%static 'js/noV.js'%}"></script>
 {% endblock body %}
