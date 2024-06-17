@@ -10,3 +10,11 @@ class CustomUser(AbstractUser):
     activo = models.BooleanField(default=True)
     telefono =  models.CharField(max_length=10, blank=True, null=False)
 
+
+class Repartidor(models.Model):
+    id_repartidor = models.AutoField(primary_key=True)
+    nombres=models.CharField(max_length=50)
+    apellidos=models.CharField(max_length=50)
+    DUI_persona=models.CharField(max_length=10)
+    telefono_repartidor=models.CharField(max_length=10, blank=True, null=False)
+    
