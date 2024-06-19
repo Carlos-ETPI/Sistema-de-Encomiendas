@@ -1,16 +1,16 @@
 .custom-color {
     background-color: 	#DCDCDC;
-    color: #ffffff; 
+    color: #c42e2e; 
 }
 
 .mar{
     margin-bottom:-5% ;
 }
 .nav-link i {
-    color: blue; 
+    color: rgb(205, 205, 214); 
 }
 .nav-link {
-    color: blue; 
+    color: rgb(213, 213, 236); 
 }
 
 .nav-link:hover i,

@@ -15,13 +15,16 @@
     
 </head>
 <body>
+    
     <!-- Navbar -->
     <div class="row px-3 custom-color border-bottom border-3 border-primary d-flex flex-wrap "  >
             <div class="col-2 justify-content-center justify-content-lg-start" >
                 <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none h-1 py-1"> 
                     <img src="{% static 'img/logo.png' %}" style="width: 164px; ;height:67px;" >
                 </a>
+                
             </div>
+            
             {% if user.is_authenticated and user.groups.all %}
             <div class="col-5 justify-content-end"></div>
             {% endif %}
@@ -29,6 +32,7 @@
             <div class="col-8 justify-content-end"></div>
             {% endif %}
                 <div class="nav col-lg-auto my-2 justify-content-center my-md-0 text-small mar"  >
+                    
                     <li  >
                         <a href="/" class="nav-link  d-flex flex-column align-items-center">
                             <i class="fas fa-home d-block mx-auto mb-1 size-icon mt-2" ></i>
@@ -38,7 +42,7 @@
                     {% if user.is_authenticated and user.groups.all %}
                     
                     <li >
-                        <a href="{% url 'moduloUsuarios:users' %}" class="nav-link nav-link  d-flex flex-column align-items-center ">
+                        <a href="{% url 'moduloUsuarios:users' %}" class="nav-link  d-flex flex-column align-items-center ">
                             <i class="fas fa-person-booth d-block mx-auto mb-1 size-icon mt-2" ></i>
                             
                             Usuarios
