@@ -1,11 +1,14 @@
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
-from .models import CustomUser
+from .models import CustomUser,Repartidor
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.contrib import messages
+from django.views.generic import UpdateView,ListView,CreateView,UpdateView
+from .forms import RepartidorForm
+from django.urls import reverse_lazy
 CustomUser = get_user_model()
 
 # Create your views here.
@@ -211,3 +214,61 @@ def delCliente(request):
 #vista para ver usuario
 def verCliente(request):
     return render(request, 'moduloUsuarios/verCliente.html')
+
+
+
+	#--------------------------- Modulo Repartidor----------------------
+
+#vista crear
+def crear_repartidor(request):
+    if request.method == "POST":
+        form = RepartidorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("moduloUsuarios:crud_repartidor")
+    else:
+        form = RepartidorForm()
+    return render(request, "moduloUsuarios/crearRepartidor.html", {"form": form})
+
+
+#vista listar repartidores
+class crud_repartidor(ListView):
+    template_name = "moduloUsuarios/crudRepartidor.html"
+    model = Repartidor
+    context_object_name = "lista_Repartidor"
+    # paginate_by=7
+    # queryset=Repartidor.objects.all()
+
+#vista ver datos repartidor
+def ver_repartidor(request, pk):
+    repartidor = get_object_or_404(Repartidor, pk=pk)
+    return render(
+        request, "moduloUsuarios/verRepartidor.html", {"repartidor": repartidor}
+    )
+
+#vista modificar repartidor
+class modificar_repartidor(UpdateView):
+    template_name = "moduloUsuarios/modificarRepartidor.html"
+    model = Repartidor
+    form_class = RepartidorForm
+    success_url = reverse_lazy("moduloUsuarios:crud_repartidor")
+
+    def form_valid(self, form):
+        messages.success(self.request, "El Repartidor se ha modificado exitosamente")
+        return super().form_valid(form)
+
+#vista eliminar repartidor
+def eliminar_repartidor(request, pk):
+    repartidor = get_object_or_404(Repartidor, pk=pk)
+
+    if request.method == "POST":
+        repartidor.delete()
+        return redirect("moduloUsuarios:crud_repartidor")
+
+    return render(
+        request, "moduloUsuarios/eliminarRepartidor.html", {"repartidor": repartidor}
+		
+		
+		
+    )
+	

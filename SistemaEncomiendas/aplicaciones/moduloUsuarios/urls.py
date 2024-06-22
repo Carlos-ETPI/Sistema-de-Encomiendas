@@ -18,6 +18,11 @@ urlpatterns = [
     path('verificarCliente/',views.verifCliente, name="verifCliente"),
     path('verCliente/',views.verCliente, name="verCliente"),
 
+    path("crear_repartidor/", views.crear_repartidor, name="crear_repartidor"),
+    path("crud_repartidor/", views.crud_repartidor.as_view(), name="crud_repartidor"),
+    path("ver_repartidor/<int:pk>/", views.ver_repartidor, name="ver_repartidor"),
+    path('modificar_repartidor/<pk>/', views.modificar_repartidor.as_view(), name='modificar_repartidor'),
+    path( "eliminar_repartidor/<pk>/", views.eliminar_repartidor, name="eliminar_repartidor",),
 
 
 ]
