@@ -18,7 +18,11 @@ def group_required(group_name):
 @group_required('Jefe')
 def mostrar_viajes(request):
     viajes_list = Viaje.objects.all().order_by('id_viaje')
-    return render(request, 'moduloViajes/viajes.html', {'viajes': viajes_list})
+    
+    for viaje in viajes_list:
+        total=(viaje.cantidad_personas*viaje.precio_boleto_ida) +(viaje.cantidad_personas*viaje.precio_boleto_retorno)
+    
+    return render(request, 'moduloViajes/viajes.html', {'viajes': viajes_list,'total':total})
 
 
 # Vista para mostrar el listado de viajes filtrados por el destino
@@ -30,6 +34,7 @@ def mostrar_viajes_filtrados(request):
     else:
         viajes_list = Viaje.objects.all().order_by('fecha_ida')
     
+    
     return render(request, 'moduloViajes/viajes.html', {'viajes': viajes_list})
 
 
@@ -39,7 +44,7 @@ def ver_viaje(request,pk):
     viaje = get_object_or_404(Viaje, id_viaje=pk)
     viaje.precio_boleto_ida = str(viaje.precio_boleto_ida).replace(',', '.')
     viaje.precio_boleto_retorno = str(viaje.precio_boleto_retorno).replace(',', '.')
-
+    
     return render(request, 'moduloViajes/verViaje.html',{'viaje':viaje})
 
 

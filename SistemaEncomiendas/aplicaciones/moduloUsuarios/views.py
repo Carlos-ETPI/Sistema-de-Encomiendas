@@ -76,11 +76,11 @@ def agregarUsuario(request):
             return render(request, 'moduloUsuarios/crear.html')    
         
         #validacion de parametros
-        if len(nombres) > 50:
+        if len(nombres) > 10:
             messages.error(request, 'Nombres demasiado extensos, trate de usar abreviaciones como: David G. Aguilar')
             return render(request, 'moduloUsuarios/crear.html')
         
-        if len(apellidos) > 50:
+        if len(apellidos) > 10:
             messages.error(request, 'Apellidos demasiado extensos, trate de usar abreviaciones como: G. Aguilar')
             return render(request, 'moduloUsuarios/crear.html')
         
