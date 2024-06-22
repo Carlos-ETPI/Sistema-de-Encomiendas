@@ -4,33 +4,29 @@
 {% block body %}
 
 {% if messages %}
-    {% for message in messages %}
         <div class="alert alert-danger"><b>{{ message }}</b></div>
-    {% endfor %}
-
-    
 {% endif %}
-<section class="vh-100" >
-    <div class="container py-5 " >
-        <div class="row d-flex justify-content-center  h-100"  >
-            <div class="col col-xl-10" >
-                <div class="card" style="border-radius: 1rem;"  >
-                    <div class="row g-0" >
-                        <div class="col-md-4 col-lg-5 d-none d-md-block " ><!--imagen-->
-                            <img src="{% static 'img/Vuelo9_16.jpg' %}"
-                                alt="Login form illustration" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
-                        </div>
-                        <div class="col-md-6 col-lg-7 d-flex align-items-center " style="background-color: #F5F0EF;border-radius: 0 1rem 1rem 0; "><!--form-->
-                            <div class="card-body p-4 p-lg-5 text-black" >
 
-                                <form method="post">
+<section class="vh-100">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center h-100">
+            <div class="col col-xl-10">
+                <div class="card" style="border-radius: 1rem;">
+                    <div class="row g-0">
+                        <div class="col-md-4 col-lg-5 d-none d-md-block">
+                            <img src="{% static 'img/Vuelo9_16.jpg' %}" alt="Login form illustration" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                        </div>
+                        <div class="col-md-6 col-lg-7 d-flex align-items-center" style="background-color: #F5F0EF; border-radius: 0 1rem 1rem 0;">
+                            <div class="card-body p-4 p-lg-5 text-black">
+
+                                <form method="post" class="needs-validation" novalidate>
                                     {% csrf_token %}
-                                    <div class="d-flex flex-wrap align-items-center mb-3 pb-1" >
-                                            <img src="{% static 'img/logo.png' %}"  alt="Example Image "  >
+                                    <div class="d-flex flex-wrap align-items-center mb-3 pb-1">
+                                        <img src="{% static 'img/logo.png' %}" alt="Example Image">
                                     </div>
 
-                                    <h5 class="fw-normal mb-3 pb-3 " style="letter-spacing: 1px; ;"><b>inicia sesion en tu cuenta</b> </h5>
-                                    <div class="">
+                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;"><b>Inicia sesión en tu cuenta</b></h5>
+                                    <div class="mb-2">
                                     {% if form.errors %}
                                         {% for field in form  %}
                                             {% if field.errors %}
@@ -40,27 +36,27 @@
                                             
                                             {% endif %}
                                         {% endfor %} 
-                                    {% endif %}
-                                </div>
-                                    <div class="form-floating mb-4" >
-                                    
-                                        {{ form.username | add_class:"form-control form-control-lg" | attr:"autocomplete=off,placeholder='Usuario'" }}
-
-                                        <label class="form-label" for="form2Example17">Usuario</label>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-floating mb-4">
+                                        {{ form.username}}
+                                        <label for="id_username">Usuario</label>
+                                        <div class="invalid-feedback">
+                                            Por favor ingrese un nombre de usuario.
+                                        </div>
                                     </div>
 
                                     <div class="form-floating mb-4">
-                                        
-                                        {{ form.password |add_class:"form-control form-control-lg"| attr:"{'placeholder':'Usuario','autocomplete':'off'}"}}
-                                        <label class="form-label" for="form2Example27">Contraseña</label>
+                                        {{ form.password }}
+                                        <label for="id_password">Contraseña</label>
+                                        <div class="invalid-feedback">
+                                            Por favor ingrese una contraseña.
+                                        </div>
                                     </div>
 
                                     <div class="pt-1 mb-4">
                                         <button class="btn btn-success btn-lg btn-block" type="submit">Login</button>
                                     </div>
-
-                                
-                                    
                                 </form>
 
                             </div>
@@ -71,6 +67,9 @@
         </div>
     </div>
 </section>
-<script src="{%static 'js/ValidacionNoVacio.js'%}"></script>
-<script src="{%static 'js/noV.js'%}"></script>
+
+
+
+
 {% endblock body %}
+
