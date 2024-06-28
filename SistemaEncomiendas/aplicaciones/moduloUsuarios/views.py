@@ -220,15 +220,11 @@ def verCliente(request):
 	#--------------------------- Modulo Repartidor----------------------
 
 #vista crear
-def crear_repartidor(request):
-    if request.method == "POST":
-        form = RepartidorForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("moduloUsuarios:crud_repartidor")
-    else:
-        form = RepartidorForm()
-    return render(request, "moduloUsuarios/crearRepartidor.html", {"form": form})
+class crear_repartidor(CreateView):
+    form_class = RepartidorForm
+    success_url = reverse_lazy('moduloUsuarios:crud_repartidor')
+    template_name = 'moduloUsuarios/crearRepartidor.html'
+
 
 
 #vista listar repartidores

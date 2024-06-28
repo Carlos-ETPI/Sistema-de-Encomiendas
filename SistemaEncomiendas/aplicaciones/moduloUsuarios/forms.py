@@ -4,11 +4,11 @@ from django import forms
 from .models import Repartidor
 
 class RepartidorForm(forms.ModelForm):
-    id_repartidor = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'id'}))
     nombres = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombres'}))
     apellidos = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Apellidos'}))
     DUI_persona = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'DUI'}))
     telefono_repartidor = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono'}))
+
 
     def clean_DUI_persona(self):
         dui = self.cleaned_data['DUI_persona']
@@ -23,6 +23,7 @@ class RepartidorForm(forms.ModelForm):
         if not re.match(telefono_regex, telefono):
             raise forms.ValidationError("Formato de teléfono inválido. Debe ser xxxx-xxxx.")
         return telefono
+    
 
     class Meta:
         model = Repartidor

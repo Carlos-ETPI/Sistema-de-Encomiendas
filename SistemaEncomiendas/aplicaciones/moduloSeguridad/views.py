@@ -32,12 +32,11 @@ class LoginUser(FormView):
         
         if user is not None:
             login(self.request, user)
-            if self.request.GET:
-                next = self.request.GET['next']
-                return redirect(next)
-            return redirect(self.success_url)
+            messages.add_message(self.request, messages.SUCCESS, 'Bienvenido, {}'.format(username))
+            next_url = self.request.GET.get('next', self.success_url)
+            return redirect(next_url)
         else:
-                messages.add_message(self.request, messages.WARNING,'Error: credenciales incorrectas ')
+                messages.add_message(self.request, messages.ERROR,'Error: credenciales incorrectas ')
                 return redirect(reverse_lazy('seguridad_app:inicio_sesion'))
             
         
