@@ -11,12 +11,13 @@ urlpatterns = [
     path('eliminar/<int:pk>/', views.eliminar_usuario, name='eliminar_usuario'),
     
      #Modulo de Gestion de Cliente 
-    path('crudCliente/', views.crudClientes, name="crudClientes"),
-    path('crearCliente/',views.agrClientes, name="agrCliente"),
-    path('modificarCliente/',views.modClientes, name="modCliente"),
-    path('eliminarCliente/',views.delCliente, name="delCliente"),
-    path('verificarCliente/',views.verifCliente, name="verifCliente"),
-    path('verCliente/',views.verCliente, name="verCliente"),
+    path('crudCliente/', views.crudCliente, name="crudCliente"),
+    path('agregarCliente/',views.newCliente, name="newCliente"),
+    path('crearCliente/',views.agregarClientes, name="agregarCliente"),
+    path('modificarCliente/',views.modificarClientes, name="modificarCliente"),
+    path('eliminarCliente/<int:pk>',views.deleteCliente, name="deleteCliente"),
+    path('inspeccionarCliente/<int:pk>',views.verificarCliente, name="inspeccionarCliente"),
+    path('verCliente/<int:pk>',views.verCliente, name="verCliente"),
 
     path("crear_repartidor/", views.crear_repartidor.as_view(), name="crear_repartidor"),
     path("crud_repartidor/", views.crud_repartidor.as_view(), name="crud_repartidor"),

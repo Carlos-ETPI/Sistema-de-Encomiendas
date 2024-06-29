@@ -36,30 +36,35 @@
                         <div class="col d-flex align-items-center " style="background-color: #F5F0EF;border-radius: 1rem 1rem 1rem 1rem; "><!--form-->
                             <div class="card-body p-4 p-lg-5 text-black d-flex justify-content-center align-items-center" >
                                 
-                                <form class="w-75" method="POST">
+                                <form class="w-75" >
                                     {% csrf_token %}
                                     <h5 class="fw-normal  mb-3 pb-3 " style="letter-spacing: 1px; ;"><b>Información del Cliente</b> </h5>
                                     <hr>
                                     
                                     <div class="input-group input-group mb-3">
                                         <span class="input-group-text" id="inputGroup-sizing-sm"><b>Nombres: </b></span>
-                                        <input type="text" disabled value="{{user.nombres}}" name="nombres" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Juan Antonio">
+                                        <input type="text" disabled value="{{cliente.nombrecliente}}" name="nombres" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Juan Antonio">
                                     </div>
                                     <div class="input-group input-group mb-3">
                                         <span class="input-group-text" id="inputGroup-sizing-sm"><b>Apellidos: </b></span>
-                                        <input type="text" disabled value="{{user.apellidos}}" name="apellidos" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Perez Perez">
+                                        <input type="text" disabled value="{{cliente.apellidoCliente}}" name="apellidos" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Perez Perez">
                                     </div>
                                     <div class="input-group input-group mb-3">
                                         <span class="input-group-text" id="inputGroup-sizing-sm"><b>DUI: </b></span>
-                                        <input type="text" disabled value="{{user.dui}}" name="dui" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="12345678-0">
+                                        <input type="text" disabled value="{{cliente.duiCliente}}" name="dui" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="12345678-0">
+                                    </div>
+                                    <div class="input-group input-group mb-3">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Nacionalidad</b></span>
+                                        <input type="text" disabled value="{{cliente.nacionalidadCliente}}" required maxlength="50" name="nombres" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Salvadoreña">
                                     </div>
                                     <div class="input-group input-group mb-3">
                                         <span class="input-group-text" id="inputGroup-sizing-sm"><b>Telefono: </b></span>
-                                        <input type="text" disabled value="{{user.telefono}}" name="telefono" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="0000-0000">
+                                        <input type="text" disabled value="{{cliente.telefonoCliente}}" name="telefono" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="0000-0000">
                                     </div>
                                     <div class="input-group input-group mb-3">
                                         <span class="input-group-text" id="inputGroup-sizing-sm"><b>Email: </b></span>
-                                        <input type="text" disabled value="{{user.email}}" name="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="pp24007007@gmail.com">
+                                        <input type="text" disabled value="{{cliente.emailCliente}}" name="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="pp24007007@gmail.com">
+
                                 </form>
 
                             </div>
