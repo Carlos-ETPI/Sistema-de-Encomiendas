@@ -17,7 +17,7 @@ from django.http import HttpResponseForbidden
 
 def group_required(group_name):
     def decorator(view_func):
-        @login_required
+        @login_required(login_url='seguridad_app:inicio_sesion')
         def _wrapped_view(request, *args, **kwargs):
             if request.user.groups.filter(name=group_name).exists():
                 return view_func(request, *args, **kwargs)
@@ -228,6 +228,7 @@ class crear_repartidor(CreateView):
 
 
 #vista listar repartidores
+@method_decorator(group_required('Jefe'), name='dispatch')
 class crud_repartidor(ListView):
     template_name = "moduloUsuarios/crudRepartidor.html"
     model = Repartidor
@@ -236,6 +237,7 @@ class crud_repartidor(ListView):
     # queryset=Repartidor.objects.all()
 
 #vista ver datos repartidor
+@group_required('Jefe')
 def ver_repartidor(request, pk):
     repartidor = get_object_or_404(Repartidor, pk=pk)
     return render(
@@ -243,6 +245,7 @@ def ver_repartidor(request, pk):
     )
 
 #vista modificar repartidor
+@method_decorator(group_required('Jefe'), name='dispatch')
 class modificar_repartidor(UpdateView):
     template_name = "moduloUsuarios/modificarRepartidor.html"
     model = Repartidor
@@ -254,6 +257,7 @@ class modificar_repartidor(UpdateView):
         return super().form_valid(form)
 
 #vista eliminar repartidor
+@group_required('Jefe')
 def eliminar_repartidor(request, pk):
     repartidor = get_object_or_404(Repartidor, pk=pk)
 

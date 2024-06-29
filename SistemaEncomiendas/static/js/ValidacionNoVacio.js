@@ -28,3 +28,10 @@ $(document).ready(function() {
             }, false);
         });
 })();
+
+//Se utiliza para burbujas de texto
+// Inicializar tooltips de Bootstrap
+$(document).ready(function() {
+$('[data-bs-toggle="tooltip"]').tooltip();
+});
+

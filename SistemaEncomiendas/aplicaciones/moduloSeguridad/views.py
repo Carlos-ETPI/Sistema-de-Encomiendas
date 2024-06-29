@@ -43,6 +43,7 @@ class LoginUser(FormView):
 
 def cerrar_sesion(request):
     logout(request)
+    messages.success(request, "Sesión cerrada, hasta luego.")
     return render(request,'home2.html')
 
 class ChangePasswordView(FormView):
