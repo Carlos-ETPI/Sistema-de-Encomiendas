@@ -17,10 +17,10 @@
             </div>
         </div>
         <div class="col-md-6 mb-1">
-            <div class="d-flex justify-content-end">
-                <a href="/usuarios/crudRepartidor/">
+            <div class="d-flex justify-content-end   ">
+                <a href="{%url 'moduloUsuarios:crud_repartidor'%}">
                     <button type="button" class="btn btn-warning mt-1">
-                        <i class="fas fa-arrow-left"></i> Regresar
+                        <i class="fas fa-arrow-left"></i>  Regresar
                     </button>
                 </a>
             </div>
@@ -51,11 +51,11 @@
                                     </div>
                                     <div class="input-group input-group mb-3">
                                         <span class="input-group-text" id="inputGroup-sizing-sm"><b>DUI: </b></span>
-                                        <input type="text" disabled value="{{ repartidor.dui }}" name="dui" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="12345678-0">
+                                        <input type="text" disabled value="{{ repartidor.DUI_persona }}" name="dui" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="12345678-0">
                                     </div>
                                     <div class="input-group input-group mb-3">
                                         <span class="input-group-text" id="inputGroup-sizing-sm"><b>Telefono: </b></span>
-                                        <input type="text" disabled value="{{ repartidor.telefono }}" name="telefono" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="1234-5678">
+                                        <input type="text" disabled value="{{ repartidor.telefono_repartidor }}" name="telefono" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="1234-5678">
                                     </div>
                                 </form>
                             </div>

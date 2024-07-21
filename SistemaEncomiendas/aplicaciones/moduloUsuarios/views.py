@@ -13,7 +13,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 CustomUser = get_user_model()
 from .models import Cliente
-
+from django.http import JsonResponse,HttpResponseBadRequest
 
 # Create your views here.
 from django.contrib.auth.decorators import login_required
@@ -425,7 +425,7 @@ class modificar_repartidor(UpdateView):
     def form_valid(self, form):
         messages.success(self.request, "El Repartidor se ha modificado exitosamente")
         return super().form_valid(form)
-
+    
 #vista eliminar repartidor
 @group_required('Jefe')
 def eliminar_repartidor(request, pk):
@@ -433,12 +433,12 @@ def eliminar_repartidor(request, pk):
 
     if request.method == "POST":
         repartidor.delete()
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'message': 'Repartidor eliminado correctamente!'})
         return redirect("moduloUsuarios:crud_repartidor")
 
-    return render(
-        request, "moduloUsuarios/eliminarRepartidor.html", {"repartidor": repartidor}
-		
-		
-		
-    )
+    return render(request, "moduloUsuarios/eliminarRepartidor.html", {"repartidor": repartidor})
+
+
+
 	
