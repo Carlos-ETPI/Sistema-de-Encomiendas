@@ -19,10 +19,10 @@ def group_required(group_name):
 def mostrar_viajes(request):
     viajes_list = Viaje.objects.all().order_by('id_viaje')
     
-    for viaje in viajes_list:
-        total=(viaje.cantidad_personas*viaje.precio_boleto_ida) +(viaje.cantidad_personas*viaje.precio_boleto_retorno)
+    #for viaje in viajes_list:
+    #   total=(viaje.cantidad_personas*viaje.precio_boleto_ida) +(viaje.cantidad_personas*viaje.precio_boleto_retorno)
     
-    return render(request, 'moduloViajes/viajes.html', {'viajes': viajes_list,'total':total})
+    return render(request, 'moduloViajes/viajes.html', {'viajes': viajes_list})
 
 
 # Vista para mostrar el listado de viajes filtrados por el destino
