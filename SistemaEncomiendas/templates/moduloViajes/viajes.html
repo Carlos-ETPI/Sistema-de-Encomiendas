@@ -60,7 +60,6 @@
                     <th class="bg-secondary text-white  justify-content-center" scope="col">Destino</th>
                     <th class="bg-secondary text-white  justify-content-center" scope="col">Fecha de Ida</th>
                     <th class="bg-secondary text-white justify-content-center" scope="col">Fecha de Regreso</th>
-                    <th class="bg-secondary text-white justify-content-center" scope="col">total</th>
                     <th class="bg-secondary text-white  justify-content-center" scope="col">Acción</th>
                 </tr>
             </thead>
@@ -71,9 +70,6 @@
                     <td>{{v.destino}}</td>
                     <td>{{v.fecha_ida}}</td>
                     <td>{{v.fecha_vuelta}}</td>
-                    <td>{{ total }}</td>
-                    
-
                     <td class="d-flex justify-content-center">
                         <a href="{%url 'moduloViajes:verviaje' pk=v.id_viaje %}" class="icon-link text-primary mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
                             <i class="fa fa-id-card"></i>
