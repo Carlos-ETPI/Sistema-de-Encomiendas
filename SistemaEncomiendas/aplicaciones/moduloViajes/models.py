@@ -6,7 +6,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 # Create your models here.
 class Viaje(models.Model):
     id_viaje = models.AutoField(primary_key=True)
-    #id_usuario = models.ForeignKey(Usuario)
     fecha_ida = models.DateField()
     fecha_vuelta = models.DateField()
     destino=models.CharField(max_length=100)
@@ -16,3 +15,4 @@ class Viaje(models.Model):
         ])
     precio_boleto_ida=models.DecimalField(max_digits=10, decimal_places=2)
     precio_boleto_retorno=models.DecimalField(max_digits=10, decimal_places=2)
+

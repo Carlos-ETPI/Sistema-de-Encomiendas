@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container mt-3">
         <div class=" row bg-secondary py-1">
-            <h3 class="mb-1 text-white">Productos</h3>
+            <h3 class="mb-1 text-white">Viajes</h3>
         </div >
         <div class=" row align-items-center border mt-1 " style="background-color: #F5F0EF;">
             <div class="col-md-6  ">
@@ -18,7 +18,7 @@
             </div>
             <div class="col-md-6  mb-1">
                 <div class="d-flex justify-content-end   ">
-                    <a href="nuevo/">
+                    <a href="{%url 'moduloViajes:nuevo'%}">
                         <button type="button" class="btn btn-secondary mt-1">
                             <i class="fas fa-plus-circle"></i>  Agregar
                         </button>
@@ -30,9 +30,10 @@
             <div class="row align-items-center border  p-2 ">
                 
                 <div class="col-auto">
-                <form action="" class="needs-validation" >
-                    <label class="visually-hidden form-label" for="validationCustom01">Nombre de Producto</label>
-                    <input type="text" class="form-control mb-2" id="productName" id="validationCustom01"  placeholder="Nombre de Producto" autocomplete="off" required>
+                <form action="{%url 'moduloViajes:filtroviajes' %}" method="post" class="needs-validation" >
+                    {% csrf_token %} 
+                    <label class="visually-hidden form-label" for="validationCustom01">Nombre del destino</label>
+                    <input type="text" name="destino" class="form-control mb-2"  id="validationCustom01"  placeholder="Nombre del destino" autocomplete="off" required>
                     <div class="invalid-feedback">
                         Looks good!
                     </div>   
@@ -44,9 +45,11 @@
                 </form>
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn btn-secondary mb-2">
+                    <a href="{%url 'moduloViajes:listaviajes'%}">
+                    <button type="submit" class="btn btn-secondary mb-2">
                         <i class="fas fa-backspace"></i>  Limpiar
                     </button>
+                    </a>
                 </div>
             </div>
         
@@ -61,61 +64,29 @@
                 </tr>
             </thead>
             <tbody>
+                {% for v in viajes %}
                 <tr >
-                    <th scope="row">1</th>
-                    <td>Bateria 5G Lenovo</td>
-                    <td>37.0000</td>
-                    <td>Tecnología</td>
+                    <th scope="row">{{v.id_viaje}}</th>
+                    <td>{{v.destino}}</td>
+                    <td>{{v.fecha_ida}}</td>
+                    <td>{{v.fecha_vuelta}}</td>
+
                     <td class="d-flex justify-content-center">
-                        <a href="" class="icon-link text-success mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
-                            <i class="far fa-save icon icon-efect"></i>
-                            <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Guardar</span>
+                        <a href="{%url 'moduloViajes:verviaje' pk=v.id_viaje %}" class="icon-link text-primary mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
+                            <i class="fa fa-id-card"></i>
+                            <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Ver Viaje</span>
                         </a>
-                        <a href="" class="text-sucess mx-auto mx-2 icon-link text-primary mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
+                        <a href="{%url 'moduloViajes:editarviaje' pk=v.id_viaje %}" class="text-sucess mx-auto mx-2 icon-link text-primary mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
                             <i class="fas fa-user-edit"></i>
                             <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Editar</span>
                         </a>
-                        <a href="" class="icon-link text-danger mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
+                        <a href="{%url 'moduloViajes:eliminarviaje' pk=v.id_viaje %}" class="icon-link text-danger mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
                             <i class="fas fa-trash-alt"></i>
                             <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Eliminar</span>
                         </a>
-                        
                     </td>
                 </tr>
-                <tr >
-                    <th scope="row">1</th>
-                    <td>Bateria 5G Lenovo</td>
-                    <td>37.0000</td>
-                    <td>Tecnología</td>
-                    <td class="d-flex justify-content-center">
-                        <a href="" class="text-success mx-auto mx-2" style="font-size: 20px;">
-                            <i class="far fa-save "></i>
-                        </a>
-                        <a href="" class="text-danger mx-auto mx-2" style="font-size: 20px;">
-                            <i class="fas fa-trash-alt" ></i>
-                        </a>
-                        <a href="" class="text-sucess mx-auto mx-2" style="font-size: 20px;">
-                            <i class="fas fa-user-edit"></i>
-                        </a>
-                    </td>
-                </tr>
-                <tr >
-                    <th scope="row">1</th>
-                    <td>Bateria 5G Lenovo</td>
-                    <td>37.0000</td>
-                    <td>Tecnología</td>
-                    <td class="d-flex justify-content-center">
-                        <a href="" class="text-success mx-auto mx-2" style="font-size: 20px;">
-                            <i class="far fa-save"></i>
-                        </a>
-                        <a href="" class="text-danger mx-auto mx-2" style="font-size: 20px;">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                        <a href="" class="text-sucess mx-auto mx-2" style="font-size: 20px;">
-                            <i class="fas fa-user-edit"></i>
-                        </a>
-                    </td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
         
