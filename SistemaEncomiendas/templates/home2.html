@@ -1,15 +1,10 @@
-{% extends "base3.html" %}
+{% extends "base4.html" %}
 {% load static %}
 
 {% block body %}
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-success"><b>{{ message }}</b></div>
-    {% endfor %}
 
-    
-{% endif %}
-<div class="container-fluid p-0">
+
+<div class="container-fluid p-0 " style="margin-top: -45px;">
     <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -217,13 +212,13 @@
 
 
 <!-- Footer Start -->
-<div class="container-fluid custom-color text-white mt-5 pt-5 px-sm-3 px-md-5">
+<div class="container-fluid bg-light text-white mt-5 pt-5 px-sm-3 px-md-5">
     <div class="row pt-5">
         <div class="col-lg-3 col-md-6 mb-5 text-primary">
             <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none h-1 py-1"> 
                 <img src="{% static 'img/logo.png' %}" style="width: 164px; ;height:67px;" >
             </a>
-             
+            
             <div class="d-flex justify-content-start mt-4 text-primary" >
                 
                 <a class="btn btn-outline-primary rounded-circle text-center mr-2 px-0" style="width: 38px; height: 38px;" href="#"><i class="fab fa-facebook-f"></i></a>
@@ -233,7 +228,7 @@
         
         <div class="col-lg-3 col-md-6 mb-5 text-primary">
             <h4 class=" mb-4 text-primary">Contactanos</h4>
-         
+        
             
             <p><i class="fa fa-phone-alt mr-2"></i>  +503 7777 7777</p>
             <p><i class="fa fa-envelope mr-2"></i>  info@example.com</p>

@@ -1,4 +1,4 @@
-{% extends "base3.html" %}
+{% extends "base4.html" %}
 
 {% block titulo %}Información de Repartidores{% endblock titulo %}
 
@@ -26,28 +26,6 @@
         </div>
     </div>
 
-    <div class="row align-items-center border p-2">
-        <div class="col-auto">
-            <form action="" class="needs-validation">
-                <label class="visually-hidden form-label" for="validationCustom01">Nombre de Repartidor</label>
-                <input type="text" class="form-control mb-2" id="repartidorName" id="validationCustom01" placeholder="Nombre de Repartidor" autocomplete="off" required>
-                <div class="invalid-feedback">
-                    Looks good!
-                </div>
-        </div>
-        <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-2">
-                <i class="fas fa-search"></i> Buscar
-            </button>
-            </form>
-        </div>
-        <div class="col-auto">
-            <button type="button" class="btn btn-secondary mb-2">
-                <i class="fas fa-backspace"></i> Limpiar
-            </button>
-        </div>
-    </div>
-
     <table class="table table-striped table-hover table-bordered mt-5">
         <thead>
             <tr>
@@ -68,17 +46,43 @@
                 <td>{{ repartidor.DUI_persona}}</td>
                 <td>{{ repartidor.telefono_repartidor }}</td>
                 <td class="d-flex justify-content-center">
-                    <a href="{% url 'moduloUsuarios:modificar_repartidor' repartidor.id_repartidor %}" class="text-success mx-auto mx-2" style="font-size: 20px;">
+                    <a href="{% url 'moduloUsuarios:modificar_repartidor' repartidor.id_repartidor %}" class="icon-link text-primary mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
                         <i class="fas fa-user-edit"></i>
+                        <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Modificar</span>
                     </a>
-                    <a href="{% url 'moduloUsuarios:eliminar_repartidor' repartidor.id_repartidor %}" class="text-danger mx-auto mx-2" style="font-size: 20px;">
+                    <a href="{% url 'moduloUsuarios:ver_repartidor' repartidor.id_repartidor%}" class="icon-link text-success mx-auto mx-2 d-flex flex-column position-relative"  style="font-size: 20px;">
+                        <i class="fa fa-id-card" aria-hidden="true"></i>
+                        <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Ver</span>
+                    </a>
+                    <button type="button" class="icon-link text-danger mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px; padding: 0; border: none; background: none;" data-bs-toggle="modal" data-bs-target="#eliminarModal" data-repartidor-id="{{ repartidor.id_repartidor }}" data-repartidor-nombre="{{ repartidor.nombres }}">
                         <i class="fas fa-trash-alt"></i>
-                    </a>
+                        <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Eliminar</span>
+                    </button>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+</div>
 
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarModalLabel">Eliminar Repartidor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas eliminar al repartidor <b><span id="repartidorNombre">{{ repartidor.apellidos }}</span></b>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form id="eliminarForm" method="POST"  action="{% url 'moduloUsuarios:eliminar_repartidor' 1%}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock body %}

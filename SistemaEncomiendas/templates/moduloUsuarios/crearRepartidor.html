@@ -1,4 +1,4 @@
-{% extends "base3.html" %}
+{% extends "base4.html" %}
 {% block titulo %}Crear Repartidor{% endblock titulo %}
 
 {% block body %}
@@ -37,7 +37,16 @@
                                     {% csrf_token %}
                                     <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;"><b>Formulario de registro para Repartidores</b></h5>
                                     <hr>
-
+                                    {% if form.errors %}
+                                        {% for field in form  %}
+                                            {% if field.errors %}
+                                                {% for error in field.errors  %}
+                                                <li class="text-danger "><b>{{error|escape}}</b></li>
+                                                {% endfor %}
+                                            
+                                            {% endif %}
+                                        {% endfor %} 
+                                        {% endif %}
                                     <div class="input-group input-group mb-3">
                                         <span class="input-group-text" id="inputGroup-sizing-sm"><b>Nombres: </b></span>
                                         {{ form.nombres }}

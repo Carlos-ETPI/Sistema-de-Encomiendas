@@ -1,16 +1,16 @@
 .custom-color {
-    background-color: 	#DCDCDC;
-    color: #ffffff; 
+    background-color: 	#194376;
+    color: #c42e2e; 
 }
 
 .mar{
     margin-bottom:-5% ;
 }
 .nav-link i {
-    color: blue; 
+    color: rgb(15, 15, 240); 
 }
 .nav-link {
-    color: blue; 
+    color: rgb(19, 19, 236); 
 }
 
 .nav-link:hover i,
@@ -65,3 +65,17 @@
         margin-bottom: 20px;
         color: #666;
       }
+      .nav-bar::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 50%;
+        top: 0;
+        left: 0;
+        background: #194376;
+      }
+      @media (min-width: 768px) {
+        .move-up-md {
+            margin-top: -50px;
+        }
+    }

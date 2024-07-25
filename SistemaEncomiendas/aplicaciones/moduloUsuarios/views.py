@@ -1,16 +1,19 @@
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
-from .models import CustomUser
+from .models import CustomUser,Repartidor
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.contrib import messages
+from django.views.generic import UpdateView,ListView,CreateView,UpdateView
+from .forms import RepartidorForm
+from django.urls import reverse_lazy
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 CustomUser = get_user_model()
-from .models import ClienteForm
-
+from .models import Cliente
+from django.http import JsonResponse,HttpResponseBadRequest
 
 # Create your views here.
 from django.contrib.auth.decorators import login_required
@@ -18,7 +21,7 @@ from django.http import HttpResponseForbidden
 
 def group_required(group_name):
     def decorator(view_func):
-        @login_required
+        @login_required(login_url='seguridad_app:inicio_sesion')
         def _wrapped_view(request, *args, **kwargs):
             if request.user.groups.filter(name=group_name).exists():
                 return view_func(request, *args, **kwargs)
@@ -76,11 +79,11 @@ def agregarUsuario(request):
             return render(request, 'moduloUsuarios/crear.html')    
         
         #validacion de parametros
-        if len(nombres) > 50:
+        if len(nombres) > 10:
             messages.error(request, 'Nombres demasiado extensos, trate de usar abreviaciones como: David G. Aguilar')
             return render(request, 'moduloUsuarios/crear.html')
         
-        if len(apellidos) > 50:
+        if len(apellidos) > 10:
             messages.error(request, 'Apellidos demasiado extensos, trate de usar abreviaciones como: G. Aguilar')
             return render(request, 'moduloUsuarios/crear.html')
         
@@ -219,12 +222,13 @@ def eliminar_usuario(request, pk):
 #Vistas para el submodulo de usuarios Gestion de Clientes 
 #vista de crud Clientes
 
-
+@group_required('Jefe')
 def crudCliente(request):
-    client_list = ClienteForm.objects.filter(estado=True)
+    client_list = Cliente.objects.filter(estado=True)
     return render(request, 'moduloUsuarios/crudCliente.html', {'client_list': client_list})
 
-#vista agregarCliente 
+#vista agregarCliente
+@group_required('Jefe') 
 def agregarClientes(request):
     if request.method == 'POST':
         # Recuperar los datos del formulario
@@ -242,12 +246,12 @@ def agregarClientes(request):
             return render(request, 'moduloUsuarios/crearCliente.html')
 
         # Verificar que el DUI es único
-        if ClienteForm.objects.filter(duiCliente=duiCliente).exists():
+        if Cliente.objects.filter(duiCliente=duiCliente).exists():
             messages.error(request, 'Error al ingresar documento de identidad, el número ingresado ya está registrado')
             return render(request, 'moduloUsuarios/crearCliente.html')
 
         # Verificar email
-        if ClienteForm.objects.filter(emailCliente=emailCliente).exists():
+        if Cliente.objects.filter(emailCliente=emailCliente).exists():
             messages.error(request, 'La dirección de correo electrónico ya está en uso, por favor ingrese otro email')
             return render(request, 'moduloUsuarios/crearCliente.html')
 
@@ -277,7 +281,7 @@ def agregarClientes(request):
 
         try:
             # Creación de cliente
-            cliente = ClienteForm.objects.create(
+            cliente = Cliente.objects.create(
                 nombreCliente=nombreCliente,
                 apellidoCliente=apellidoCliente,
                 duiCliente=duiCliente,
@@ -293,14 +297,16 @@ def agregarClientes(request):
         return render(request, 'moduloUsuarios/crearCliente.html')
 
 #renderizar html crearCliente
+@group_required('Jefe')
 def newCliente(request):
     return render(request, 'moduloUsuarios/crearCliente.html')
 
 #Vista de formulario para modificar cliente
+@group_required('Jefe')
 def modificarClientes(request):
     if request.method == 'POST':
         pk = request.POST['idCliente']
-        cliente = get_object_or_404(ClienteForm, idCliente=pk)
+        cliente = get_object_or_404(Cliente, idCliente=pk)
         cliente.nombreCliente = request.POST['nombres']
         cliente.apellidoCliente = request.POST['apellidos']
         cliente.duiCliente = request.POST['dui']
@@ -315,12 +321,12 @@ def modificarClientes(request):
             return render(request, 'moduloUsuarios/modificarCliente.html', {'cliente': cliente})
         
         # Verificar que el DUI es único
-        if ClienteForm.objects.filter(duiCliente=cliente.duiCliente).exclude(idCliente=pk).exists():
+        if Cliente.objects.filter(duiCliente=cliente.duiCliente).exclude(idCliente=pk).exists():
             messages.error(request, 'Error al ingresar documento de identidad, el número ingresado ya está registrado')
             return render(request, 'moduloUsuarios/modificarCliente.html', {'cliente': cliente})
         
         # Verificar email
-        if ClienteForm.objects.filter(emailCliente=cliente.emailCliente).exclude(idCliente=pk).exists():
+        if Cliente.objects.filter(emailCliente=cliente.emailCliente).exclude(idCliente=pk).exists():
             messages.error(request, 'La dirección de correo electrónico ya está en uso, por favor ingrese otro email')
             return render(request, 'moduloUsuarios/modificarCliente.html', {'cliente': cliente})
         
@@ -358,13 +364,15 @@ def modificarClientes(request):
     return redirect("/usuarios/crudCliente/")
 
 #verificar cliente
+@group_required('Jefe')
 def verificarCliente(request, pk):
-    cliente = get_object_or_404(ClienteForm, idCliente=pk)
+    cliente = get_object_or_404(Cliente, idCliente=pk)
     return render(request, 'moduloUsuarios/inspeccionarCliente.html', {'cliente': cliente})
 
 #eliminar
+@group_required('Jefe')
 def deleteCliente(request, pk):
-    cliente = get_object_or_404(ClienteForm, idCliente=pk)
+    cliente = get_object_or_404(Cliente, idCliente=pk)
     if request.method == 'POST':
         cliente.estado = False
         cliente.save()
@@ -372,6 +380,65 @@ def deleteCliente(request, pk):
     return render(request, 'moduloUsuarios/eliminarCliente.html',{'cliente':cliente})
 
 #vista para ver usuario
+@group_required('Jefe')
 def verCliente(request, pk):
-    cliente = get_object_or_404(ClienteForm, idCliente=pk)
+    cliente = get_object_or_404(Cliente, idCliente=pk)
     return render(request, 'moduloUsuarios/modificarCliente.html', {'cliente': cliente})
+
+
+
+	#--------------------------- Modulo Repartidor----------------------
+
+#vista crear
+class crear_repartidor(CreateView):
+    form_class = RepartidorForm
+    success_url = reverse_lazy('moduloUsuarios:crud_repartidor')
+    template_name = 'moduloUsuarios/crearRepartidor.html'
+
+
+
+#vista listar repartidores
+@method_decorator(group_required('Jefe'), name='dispatch')
+class crud_repartidor(ListView):
+    template_name = "moduloUsuarios/crudRepartidor.html"
+    model = Repartidor
+    context_object_name = "lista_Repartidor"
+    # paginate_by=7
+    # queryset=Repartidor.objects.all()
+
+#vista ver datos repartidor
+@group_required('Jefe')
+def ver_repartidor(request, pk):
+    repartidor = get_object_or_404(Repartidor, pk=pk)
+    return render(
+        request, "moduloUsuarios/verRepartidor.html", {"repartidor": repartidor}
+    )
+
+#vista modificar repartidor
+@method_decorator(group_required('Jefe'), name='dispatch')
+class modificar_repartidor(UpdateView):
+    template_name = "moduloUsuarios/modificarRepartidor.html"
+    model = Repartidor
+    form_class = RepartidorForm
+    success_url = reverse_lazy("moduloUsuarios:crud_repartidor")
+
+    def form_valid(self, form):
+        messages.success(self.request, "El Repartidor se ha modificado exitosamente")
+        return super().form_valid(form)
+    
+#vista eliminar repartidor
+@group_required('Jefe')
+def eliminar_repartidor(request, pk):
+    repartidor = get_object_or_404(Repartidor, pk=pk)
+
+    if request.method == "POST":
+        repartidor.delete()
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'message': 'Repartidor eliminado correctamente!'})
+        return redirect("moduloUsuarios:crud_repartidor")
+
+    return render(request, "moduloUsuarios/eliminarRepartidor.html", {"repartidor": repartidor})
+
+
+
+	

@@ -1,16 +1,8 @@
-{% extends "base3.html" %}
+{% extends "base4.html" %}
 {% block titulo %}Modificar usuario{% endblock titulo %}
 
 {% block body %}
-{% if messages %}
-<div>
-    {% for message in messages %}
-    <div class="alert alert-danger">
-        {{ message }}
-    </div>
-    {% endfor %}
-</div>
-{% endif %}
+
 <div class="container mt-3">
     <div class=" row bg-secondary py-1" >
         <h3 class="mb-1 text-white">Usuarios</h3>

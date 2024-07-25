@@ -1,4 +1,4 @@
-{% extends "base3.html" %}
+{% extends "base4.html" %}
 {% load static %}
 {% block titulo %}Crear nuevo usuario{% endblock titulo %}
 
@@ -39,7 +39,7 @@
                         <div class="col d-flex align-items-center " style="background-color: #F5F0EF;border-radius: 1rem 1rem 1rem 1rem; "><!--form-->
                             <div class="card-body p-4 p-lg-5 text-black d-flex justify-content-center align-items-center" >
                                 
-                                <form class="w-75" action="/usuarios/create/" method="POST">
+                                <form class="w-75" name="form" action="/usuarios/create/" method="POST">
                                     {% csrf_token %}
                                     <h5 class="fw-normal  mb-3 pb-3 " style="letter-spacing: 1px; ;"><b>Formulario de registro</b> </h5>
                                     <hr>
@@ -54,11 +54,11 @@
                                     </div>
                                     <div class="input-group input-group mb-3">
                                         <span class="input-group-text" id="inputGroup-sizing-sm"><b>DUI</b></span>
-                                        <input type="text" name="dui" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" maxlength="10" placeholder="12345678-0">
+                                        <input type="text" id="DUI" name="dui" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" maxlength="10" placeholder="12345678-0">
                                     </div>
                                     <div class="input-group input-group mb-3">
                                         <span class="input-group-text" id="inputGroup-sizing-sm"><b>Telefono</b></span>
-                                        <input type="text" name="telefono" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" maxlength="10" placeholder="0000-0000">
+                                        <input type="text" id="tel" name="telefono" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" maxlength="9" placeholder="0000-0000">
                                     </div>
                                     <div class="input-group input-group mb-3">
                                         <span class="input-group-text" id="inputGroup-sizing-sm"><b>Nombre usuario</b></span>

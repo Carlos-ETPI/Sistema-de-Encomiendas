@@ -11,7 +11,7 @@ class CustomUser(AbstractUser):
     activo = models.BooleanField(default=True)
     telefono =  models.CharField(max_length=10, blank=True, null=False)
 
-class ClienteForm(models.Model):
+class Cliente(models.Model):
     idCliente=models.BigAutoField(primary_key=True)
     nombreCliente=models.CharField(max_length=50,blank=True, null=False)
     apellidoCliente=models.CharField(max_length=50,blank=True, null=False)
@@ -21,3 +21,9 @@ class ClienteForm(models.Model):
     emailCliente=models.CharField(max_length=50,blank=True, null=False)
     estado = models.BooleanField('estado', default=True)
     
+class Repartidor(models.Model):
+    id_repartidor = models.AutoField(primary_key=True)
+    nombres=models.CharField(max_length=50)
+    apellidos=models.CharField(max_length=50)
+    DUI_persona=models.CharField(max_length=10,unique=True)
+    telefono_repartidor=models.CharField(max_length=10, blank=True, null=False)

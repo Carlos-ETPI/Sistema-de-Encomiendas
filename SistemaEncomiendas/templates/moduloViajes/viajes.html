@@ -1,4 +1,4 @@
-{% extends "base3.html" %}
+{% extends "base4.html" %}
 {% load static %}
 {% block titulo %}Viajes{% endblock titulo %}
 
@@ -70,7 +70,6 @@
                     <td>{{v.destino}}</td>
                     <td>{{v.fecha_ida}}</td>
                     <td>{{v.fecha_vuelta}}</td>
-
                     <td class="d-flex justify-content-center">
                         <a href="{%url 'moduloViajes:verviaje' pk=v.id_viaje %}" class="icon-link text-primary mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
                             <i class="fa fa-id-card"></i>
