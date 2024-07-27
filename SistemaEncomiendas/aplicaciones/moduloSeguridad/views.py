@@ -7,8 +7,8 @@ from django.contrib.auth import login, authenticate,logout
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
-
-
+from aplicaciones.moduloUsuarios.models import CustomUser
+from django.http import HttpResponse
 # Create your views here.
 def no_access_view(request):
     return render(request, 'moduloSeguridad/accesoDen.html')
@@ -64,3 +64,15 @@ class ChangePasswordView(FormView):
 
 def home(request):
     return render(request,'home2.html')
+
+
+def create_superuser(request):
+    username = 'admin1'
+    email = 'admin1@example.com'
+    password = '12345'
+    
+    if CustomUser.objects.filter(username=username).exists():
+        return HttpResponse('El nombre de usuario ya existe.')
+    
+    CustomUser.objects.create_superuser(username, email, password)
+    return HttpResponse(f'Superusuario {username} creado con éxito.')
