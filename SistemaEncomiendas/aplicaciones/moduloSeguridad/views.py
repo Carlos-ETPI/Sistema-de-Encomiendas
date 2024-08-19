@@ -69,7 +69,7 @@ def home(request):
 def create_superuser(request):
     username = 'admin1'
     email = 'admin1@example.com'
-    password = '12345'
+    password = '*12345Aad*'
     
     if CustomUser.objects.filter(username=username).exists():
         return HttpResponse('El nombre de usuario ya existe.')

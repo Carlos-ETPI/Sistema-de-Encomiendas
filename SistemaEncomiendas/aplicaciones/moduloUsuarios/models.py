@@ -27,3 +27,10 @@ class Repartidor(models.Model):
     apellidos=models.CharField(max_length=50)
     DUI_persona=models.CharField(max_length=10,unique=True)
     telefono_repartidor=models.CharField(max_length=10, blank=True, null=False)
+    
+
+class Telefono(models.Model):
+    id_telefono = models.AutoField(primary_key=True)
+    id_cliente = models.ForeignKey(Cliente, on_delete=models.RESTRICT)
+    codigo_pais = models.CharField(max_length=3)
+    numero = models.CharField(max_length=10)
