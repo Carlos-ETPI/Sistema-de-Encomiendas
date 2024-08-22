@@ -43,6 +43,11 @@ INSTALLED_APPS = [
     'aplicaciones.moduloSeguridad',
     'aplicaciones.moduloUsuarios',
     'aplicaciones.moduloViajes',
+    'aplicaciones.moduloArticulos',
+    'aplicaciones.moduloEntRec',
+    'aplicaciones.moduloOrdPaq',
+    'aplicaciones.moduloReportes',
+    'aplicaciones.moduloSeguimiento',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +141,12 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'moduloUsuarios.CustomUser'
+
+# Tiempo de expiración de la sesión en segundos (30 minutos)
+SESSION_COOKIE_AGE = 1800
+
+# Habilitar la caducidad de la sesión al cerrar el navegador
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Habilitar la caducidad de la sesión por inactividad
+SESSION_SAVE_EVERY_REQUEST = True

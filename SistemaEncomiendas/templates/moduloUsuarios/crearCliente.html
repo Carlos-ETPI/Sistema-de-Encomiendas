@@ -4,15 +4,6 @@
 
 
 {% block body %}
-{% if messages %}
-<div>
-    {% for message in messages %}
-    <div class="alert alert-danger">
-        {{ message }}
-    </div>
-    {% endfor %}
-</div>
-{% endif %}
 <div class="container mt-3">
     <div class=" row bg-secondary py-1" >
         <h3 class="mb-1 text-white">Clientes</h3>
@@ -43,6 +34,16 @@
                                     <h5 class="fw-normal  mb-3 pb-3 " style="letter-spacing: 1px; ;"><b>Formulario de registro para Clientes </b> </h5>
                                     <hr>
                                     
+                                    {% if form.errors %}
+                                        {% for field in form  %}
+                                            {% if field.errors %}
+                                                {% for error in field.errors  %}
+                                                <li class="text-danger "><b>{{error|escape}}</b></li>
+                                                {% endfor %}
+                                            
+                                            {% endif %}
+                                        {% endfor %} 
+                                        {% endif %}
                                     <div class="input-group input-group mb-3">
                                         <span class="input-group-text" id="inputGroup-sizing-sm"><b>Nombres</b></span>
                                         <input type="text" autocomplete="off" name="nombres" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" maxlength="50" placeholder="Juan Antonio">
