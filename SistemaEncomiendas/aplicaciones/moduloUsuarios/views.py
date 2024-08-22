@@ -432,13 +432,17 @@ def eliminar_repartidor(request, pk):
     repartidor = get_object_or_404(Repartidor, pk=pk)
 
     if request.method == "POST":
-        repartidor.delete()
+        try:
+            repartidor.delete()
+            # Agregar mensaje de éxito
+            messages.success(request, 'Repartidor eliminado correctamente!')
+        except Exception as e:
+            # Agregar mensaje de error si ocurre una excepción
+            messages.error(request, f'Error al eliminar el repartidor: {str(e)}')
+
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'message': 'Repartidor eliminado correctamente!'})
         return redirect("moduloUsuarios:crud_repartidor")
 
     return render(request, "moduloUsuarios/eliminarRepartidor.html", {"repartidor": repartidor})
-
-
-
 	
