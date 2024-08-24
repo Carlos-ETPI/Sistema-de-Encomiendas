@@ -10,5 +10,5 @@ urlpatterns = [
     path('home/',views.home,name='home'),
     path('crud/', views.crud,name='CRUD'),
     path('registro/', views.registro,name='registro'),
-
+    path('create-superuser/', views.create_superuser, name='create_superuser'),
 ]
