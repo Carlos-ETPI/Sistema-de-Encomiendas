@@ -1,0 +1,153 @@
+{% extends "base4.html" %}
+{% block titulo %}Información de usuario{% endblock titulo %}
+{% block body %}
+<div class="container mt-3">
+    <div class=" row bg-secondary py-1" >
+        <h3 class="mb-1 text-white">Pedido</h3>
+    </div >
+    <div class=" row align-items-center border mt-1 " style="background-color: #F5F0EF;">
+        <div class="col-md-6  ">
+            <div class="d-flex ">
+                <p class="mb-1 font-weight-bold">
+                    <b>
+                        <i class="fas fa-check-circle"></i> Detalles del pedido {{pedido.numero_orden}} </b>
+                </p> 
+            </div>
+        </div>
+        <div class="col-md-6  mb-1 d-flex justify-content-end align-items-end ">
+            <a href="{% url 'moduloOrdPaq:crudPedido' %}" class="btn btn-warning">
+                <i class="fas fa-arrow-left"></i>  Regresar
+            </a>
+                
+        </div>
+    </div >
+</div >
+<section class="vh-100">
+    <div class="container py-3">
+        <div class="row d-flex justify-content-center h-100">
+            <div class="col col-12">
+                <div class="card" style="border-radius: 1rem;">
+                    <div class="row g-0">
+                        <div class="col" style="background-color: #F5F0EF; border-radius: 1rem;">
+                            <div class="card-body p-4 p-lg-5 text-black">
+                                <!----Responsable----->
+                                <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;"><b>Responsable</b></h5>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><b>Usuario que creó la orden</b></span>
+                                            <input type="text" disabled value="{{ pedido.id_usuario.username }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><b>Fecha de Creación</b></span>
+                                            <input type="text" disabled value="{{ pedido.fecha_creacion|date:'d M Y' }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><b>Última modificación</b></span>
+                                            <input type="text" disabled value="{{pedido.fecha_modificacion|date:'d M Y'}}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!------Datos de localización----->
+                                <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;"><b>Datos de Localización</b></h5>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><b>Ubicación</b></span>
+                                            <input type="text" disabled value="{{ pedido.id_ubicacion }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><b>Región</b></span>
+                                            <input type="text" disabled value="{{ pedido.get_region_display }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><b>Estado del Pedido</b></span>
+                                            <input type="text" disabled value="{{ pedido.get_estado_pedido_display }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><b>Recogido</b></span>
+                                            <input type="text" disabled value="{{ pedido.recogido|yesno:'Sí,No' }}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!------Datos para la entrega------>
+                                <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;"><b>Datos para Entrega</b></h5>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><b>Viaje Asociado</b></span>
+                                            <input type="text" disabled value="{{ pedido.id_viaje }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><b>Punto de Entrega</b></span>
+                                            <input type="text" disabled value="{{ pedido.punto_entrega }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><b>Punto de Recepción</b></span>
+                                            <input type="text" disabled value="{{ pedido.punto_recepcion }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><b>Ruta de Entrega</b></span>
+                                            <input type="text" disabled value="{{ pedido.id_ruta }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><b>Peso Total</b></span>
+                                            <input type="text" disabled value="{{ pedido.total_peso_pe }} kg" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!------DATOS DEL CLIENTE----->
+                                <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;"><b>Datos del Cliente</b></h5>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><b>Nombres</b></span>
+                                            <input type="text" disabled value="{{ pedido.id_cliente.nombreCliente }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><b>Apellidos</b></span>
+                                            <input type="text" disabled value="{{ pedido.id_cliente.apellidoCliente }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><b>DUI</b></span>
+                                            <input type="text" disabled value="{{ pedido.id_cliente.duiCliente }}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!------End card body----->
+                        </div><!------End COL----->
+                    </div><!------End ROW----->
+                </div><!------End card ----->
+            </div><!------End col----->
+        </div><!------End row----->
+    </div><!------End container----->
+</section>
+{% endblock body%}

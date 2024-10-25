@@ -47,6 +47,10 @@ class Pedido(models.Model):
     recogido = models.BooleanField(default=False)#definir recogido como falso por defecto
     total_peso_pe = models.DecimalField(max_digits=10, decimal_places=2)
 
+    #valor por defecto retornado cuando se referencia a los pedidos
+    def __str__(self):
+        return self.numero_orden
+
 #creacion de numero de orden personalizada
 @receiver(pre_save, sender = Pedido)
 def set_numero_orden(sender, instance, **kwargs):
