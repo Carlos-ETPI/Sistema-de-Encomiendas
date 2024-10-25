@@ -200,6 +200,7 @@ def verCliente(request, pk):
 
 #---------------------------Gestion de empleados---------------------------------
 #Vista para listar empleados
+@method_decorator(group_required('Jefe'), name='dispatch')
 class crud_empleados(ListView):
     model = CustomUser
     template_name = "moduloUsuarios/crudEmpleado.html"
@@ -216,6 +217,7 @@ class crear_empleado(CreateView):
     template_name = 'moduloUsuarios/crearEmpleado.html'
 
 #Elimanar empleados
+@group_required('Jefe')
 def eliminar_empleado(request,pk):
     empleado = get_object_or_404(CustomUser, pk=pk)
 
@@ -234,10 +236,12 @@ def eliminar_empleado(request,pk):
     return render(request, "moduloUsuarios/eliminarEmpleado.html", {"empleado": empleado})
 
 #vista inspeccionar usuario
+@group_required('Jefe')
 def ver_empleado(request, pk):
     empleado = get_object_or_404(CustomUser, idUsuario=pk)
     return render(request, 'moduloUsuarios/ver_empleado.html',{'empleado':empleado})
 
+@method_decorator(group_required('Jefe'), name='dispatch')
 class modificar_empleado(UpdateView):
     template_name = "moduloUsuarios/modificarEmpleado.html"
     model = CustomUser
