@@ -12,9 +12,9 @@ urlpatterns = [
     #Modulo de Gestion de Cliente Modificada
     path('crud_cliente/', views.crud_cliente.as_view(), name="crud_cliente"),
     path('crear_cliente/',views.crear_cliente.as_view(), name="crear_cliente"),
-    path('modificar_cliente/<int:pk>',views.modificar_cliente.as_view(), name="modificar_cliente"),
-    path('eliminar_cliente/<int:pk>',views.eliminar_cliente, name="eliminar_cliente"),
-    path('ver_cliente/<int:pk>',views.ver_cliente, name="ver_cliente"), 
+    path('modificar_cliente/<int:pk>/',views.modificar_cliente.as_view(), name="modificar_cliente"),
+    path("eliminar_cliente/<int:pk>/",views.eliminar_cliente, name="eliminar_cliente"),
+    path('ver_cliente/<int:pk>/',views.ver_cliente, name="ver_cliente"), 
      
 
 
@@ -23,7 +23,7 @@ urlpatterns = [
     path("crud_repartidor/", views.crud_repartidor.as_view(), name="crud_repartidor"),
     path("ver_repartidor/<int:pk>/", views.ver_repartidor, name="ver_repartidor"),
     path('modificar_repartidor/<int:pk>/', views.modificar_repartidor.as_view(), name='modificar_repartidor'),
-    path( "eliminar_repartidor/<int:pk>/", views.eliminar_repartidor, name="eliminar_repartidor",),
+    path( "eliminar_repartidor/<int:pk>/", views.eliminar_repartidor, name="eliminar_repartidor"),
 
 
 ]
