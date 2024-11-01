@@ -1,25 +1,27 @@
 from django import forms
 from ..moduloUsuarios.models import Repartidor  
 from ..moduloEntRec.models import Ruta  
+from ..moduloUsuarios.validators import validar_vacio
 
 
 class RutaForm(forms.ModelForm):
-    repartidor = forms.ModelChoiceField(
+    id_repartidor = forms.ModelChoiceField(
     queryset=None,
     widget=forms.Select(
         attrs={'class': 'form-control', 'placeholder': 'Repartidor', 'required': 'required'}
     )
-)
+    )
 
     fecha = forms.DateField(
         widget= forms.DateInput(
-            attrs={'class': 'form-control', 'placeholder': 'Fecha'}
+            attrs={'class': 'form-control', 'placeholder': 'Fecha','type':'date'}
         )
     )
     nombre_ruta = forms.CharField(
         widget= forms.TextInput(
             attrs ={'class': 'form-control', 'placeholder': 'Nombre Ruta'}
-        )
+        ),
+        validators=[validar_vacio]
     )
     zona = forms.CharField(
         widget= forms.TextInput(
@@ -28,7 +30,7 @@ class RutaForm(forms.ModelForm):
     )
     class Meta:
         model = Ruta
-        fields = ['repartidor', 'fecha','nombre_ruta','zona']
+        fields = ['id_repartidor', 'fecha','nombre_ruta','zona']
     
     
 def clean_id_repartidor(self):

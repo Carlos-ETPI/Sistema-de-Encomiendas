@@ -22,3 +22,28 @@ def validar_telefono(telefono):
     if not re.match(r'^\d{4}-\d{4}$' , telefono):
         raise ValidationError("Formato de teléfono inválido. Debe ser ####-####.")
         
+def validar_password(password):
+    #al menos 8 caracteres
+    if len(password) < 8:
+        raise ValidationError("La contraseña debe tener al menos 8 caracteres.")
+    
+    #al menos una letra mayuscula
+    if not re.search(r'[A-Z]',password):
+        raise ValidationError("La contraseña debe contener al menos una letra mayúscula.")
+    
+    #al menos una letra minuscula
+    if not re.search(r'[a-z]',password):
+        raise ValidationError("La contraseña debe contener al menos una letra minúscula.")
+    
+    #al menos un numero
+    if not re.search(r'[0-9]',password):
+        raise ValidationError("La contraseña debe contener al menos un número.")
+    
+    #caracter especial
+    if not re.search(r'[@#$%^&+=*]',password):
+        raise ValidationError("La contraseña debe contener al menos un caracter especial (@, #, $, %, ^, &, +, =).")
+    
+def validar_vacio(data):
+    # Verificar que la data no esté vacía
+    if not data or data.strip() == "":
+        raise ValidationError("El campo no puede estar vacío.")

@@ -256,9 +256,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     // Configuración del primer gráfico de barras (Costos Máximos y Mínimos)
-    const labels = {{ labels|safe }};
-    const dataMax = {{ data_max|safe }};
-    const dataMin = {{ data_min|safe }};
+    const labels = JSON.parse('{{ labels|safe }}');
+    const dataMax = JSON.parse('{{ data_max|safe }}');
+    const dataMin = JSON.parse('{{ data_min|safe }}');
     
     const ctx1 = document.getElementById('costosMesChart').getContext('2d');
     const costosMesChart = new Chart(ctx1, {
@@ -301,8 +301,8 @@
     });
 
     // Configuración del segundo gráfico de pastel (Cantidad de Viajes por Mes)
-    const labels_g2 = {{ labels_g2|safe }};
-    const data_g2 = {{ data_g2|safe }};
+    const labels_g2 = JSON.parse('{{ labels_g2|safe }}');
+    const data_g2 = JSON.parse('{{ data_g2|safe }}');
     
     const ctx2 = document.getElementById('viajesPorMesChart').getContext('2d');
     const viajesPorMesChart = new Chart(ctx2, {

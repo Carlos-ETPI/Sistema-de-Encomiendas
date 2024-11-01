@@ -1,22 +1,26 @@
 {% extends "base4.html" %}
-{% block titulo %}Crear Repartidor{% endblock titulo %}
+{% block titulo %}Crear Empleado{% endblock titulo %}
 
 {% block body %}
 <div class="container mt-3">
     <div class="row bg-secondary py-1">
-        <h3 class="mb-1 text-white">Rutas</h3>
+        <h3 class="mb-1 text-white">Empleado nuevo</h3>
     </div>
     <div class="row align-items-center border mt-1" style="background-color: #F5F0EF;">
         <div class="col-md-6">
             <div class="d-flex">
                 <p class="mb-1 font-weight-bold">
-                    <b><i class="fas fa-check-circle"></i> Edicion</b>
+                    <b><i class="fas fa-check-circle"></i> Registro</b>
                 </p>
             </div>
         </div>
         <div class="col-md-6 mb-1">
             <div class="d-flex justify-content-end">
-                
+                <a href="{% url 'moduloUsuarios:crud_empleado' %}">
+                    <button type="button" class="btn btn-warning mt-1">
+                        <i class="fas fa-arrow-left"></i> Regresar
+                    </button>
+                </a>
             </div>
         </div>
     </div>
@@ -31,7 +35,7 @@
                             <div class="card-body p-4 p-lg-5 text-black d-flex justify-content-center align-items-center">
                                 <form class="w-75" method="post">
                                     {% csrf_token %}
-                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;"><b>Formulario de registro para Rutas</b></h5>
+                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;"><b>Formulario de registro para empleados</b></h5>
                                     <hr>
                                     {% if form.errors %}
                                         {% for field in form  %}
@@ -42,28 +46,44 @@
                                             
                                             {% endif %}
                                         {% endfor %} 
-                                        {% endif %}
+                                    {% endif %}
                                     <div class="input-group input-group mb-3">
-                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Nombre: </b></span>
-                                        {{ form.nombre_ruta}}
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Nombres: </b></span>
+                                        {{ form.nombres }}
                                     </div>
                                     <div class="input-group input-group mb-3">
-                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Fecha: </b></span>
-                                        {{ form.fecha }}
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Apellidos: </b></span>
+                                        {{ form.apellidos }}
                                     </div>
                                     <div class="input-group input-group mb-3">
-                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Repartidor: </b></span>
-                                        {{ form.id_repartidor }}
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>DUI: </b></span>
+                                        {{ form.dui }}
                                     </div>
                                     <div class="input-group input-group mb-3">
-                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Zona: </b></span>
-                                        {{ form.zona }}
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Teléfono: </b></span>
+                                        {{ form.telefono }}
+                                    </div>
+                                    <div class="input-group input-group mb-3">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Nombre de usuario: </b></span>
+                                        {{ form.username }}
+                                    </div>
+                                    <div class="input-group input-group mb-3">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Email: </b></span>
+                                        {{ form.email }}
+                                    </div>
+                                    <div class="input-group input-group mb-3">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Contraseña: </b></span>
+                                        {{ form.password }}
+                                    </div>
+                                    <div class="input-group input-group mb-3">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Verificar Contraseña: </b></span>
+                                        {{ form.password2 }}
                                     </div>
                                     <div class="pt-1 mb-4 d-flex justify-content-end">
                                         <button class="btn btn-success btn-lg btn-block me-2" type="submit">
                                             <i class="far fa-save"></i> Guardar
                                         </button>
-                                        <a href="{% url 'moduloEntRec:ListarRutas' %}" class="btn btn-danger btn-lg btn-block">
+                                        <a href="{% url 'moduloUsuarios:crud_empleado' %}" class="btn btn-danger btn-lg btn-block">
                                             <i class="fas fa-times"></i> Cancelar
                                         </a>
                                     </div>
