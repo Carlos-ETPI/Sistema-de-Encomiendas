@@ -76,19 +76,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="eliminarModalLabel">Eliminar Cliente</h5>
+                <h5 class="modal-title" id="eliminarModalLabel">Eliminar Empleado</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>¿Estás seguro de que deseas eliminar al Cliente <b><span id="itemNameSpan"></span></b>?</p>
+                <p>¿Estás seguro de que deseas eliminar al empleado <b><span id="itemNameSpan"></span></b>?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <form id="eliminarForm" action="{% url 'moduloUsuarios:eliminar_cliente' 1 %}" method="POST">
+                <form id="eliminarForm" method="POST"  action="{% url 'moduloUsuarios:eliminar_cliente' 1%}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">Eliminar</button>
                 </form>
-                             
             </div>
         </div>
     </div>

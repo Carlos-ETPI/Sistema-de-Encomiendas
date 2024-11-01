@@ -157,27 +157,23 @@ class crear_cliente(CreateView):
     success_url = reverse_lazy('moduloUsuarios:crud_cliente')
     template_name = 'moduloUsuarios/crearCliente.html'
 
-
-
-def eliminar_cliente(request, pk):
+#Eliminar cliente
+def eliminar_cliente(request,pk):
     cliente = get_object_or_404(Cliente, pk=pk)
 
     if request.method == "POST":
         try:
             cliente.delete()
-            # Agregar mensaje de éxito
+            #mensaje de exito
             messages.success(request, 'Cliente eliminado correctamente!')
         except Exception as e:
-            # Agregar mensaje de error si ocurre una excepción
+            #mensaje de error
             messages.error(request, f'Error al eliminar el cliente seleccionado: {str(e)}')
 
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'message': 'Cliente eliminado correctamente!'})
         return redirect("moduloUsuarios:crud_cliente")
-
-    return render(request, "moduloUsuarios/eliminarCliente.html", {"cliente": cliente})
-
-
+    return render(request, "moduloUsuarios/eliminarEmpleado.html", {"cliente": cliente})
 
 #vista inspeccionar Cliente
 def ver_cliente(request, pk):
