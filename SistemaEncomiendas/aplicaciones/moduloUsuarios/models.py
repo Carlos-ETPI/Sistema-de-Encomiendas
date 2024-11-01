@@ -27,7 +27,8 @@ class Repartidor(models.Model):
     apellidos=models.CharField(max_length=50)
     DUI_persona=models.CharField(max_length=10,unique=True)
     telefono_repartidor=models.CharField(max_length=10, blank=True, null=False)
-    
+    def __str__(self):
+            return f"{self.nombres} {self.apellidos}"    
 
 class Telefono(models.Model):
     id_telefono = models.AutoField(primary_key=True)

@@ -25,7 +25,10 @@ urlpatterns = [
     path('usuarios/',include('aplicaciones.moduloUsuarios.urls')),
     path('pedidos/',include('aplicaciones.moduloOrdPaq.urls')),
     path('viajes/',include('aplicaciones.moduloViajes.urls')),
+    path('Entrega/',include('aplicaciones.moduloEntRec.urls')),
     path('',views.home,name='home'),
+    path('Reportes/',include('aplicaciones.moduloReportes.urls')),
+    
     
 
 ]
