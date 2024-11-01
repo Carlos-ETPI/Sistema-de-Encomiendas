@@ -9,7 +9,7 @@ class Articulo(models.Model):
     id_cancelacion = models.ForeignKey('Cancelacion', on_delete=models.RESTRICT, null=True, blank=True)
     nombre_articulo = models.CharField(max_length=100)
     peso = models.DecimalField(max_digits=10, decimal_places=2)
-    canrtidad = models.IntegerField()
+    cantidad = models.IntegerField()
     estado = models.CharField(max_length=30)
     costo_envio = models.DecimalField(max_digits=10, decimal_places=2)
 

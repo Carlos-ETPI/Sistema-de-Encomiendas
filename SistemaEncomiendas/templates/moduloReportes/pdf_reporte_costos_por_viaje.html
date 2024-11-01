@@ -1,0 +1,58 @@
+<!-- templates/reporte_costos_viajes.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reporte de Costos por Viaje</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Viaje</th>
+                <th>Destino</th>
+                <th>Fecha Ida</th>
+                <th>Fecha Vuelta</th>
+                <th>Cantidad Personas</th>
+                <th>Costo Total Ida</th>
+                <th>Costo Total Vuelta</th>
+                <th>Costo Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for viaje in viajes %}
+            <tr>
+                <td>{{ viaje.id_viaje }}</td>
+                <td>{{ viaje.destino }}</td>
+                <td>{{ viaje.fecha_ida }}</td>
+                <td>{{ viaje.fecha_vuelta }}</td>
+                <td>{{ viaje.cantidad_personas }}</td>
+                <td>{{ viaje.costo_total_ida }}</td>
+                <td>{{ viaje.costo_total_vuelta }}</td>
+                <td>{{ viaje.costo_total }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

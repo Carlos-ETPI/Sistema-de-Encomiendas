@@ -79,3 +79,19 @@
             margin-top: -50px;
         }
     }
+
+    /* Asegurar que el gráfico ocupe toda la página en modo de impresión */
+    @media print {
+      
+      #viajesPorMesChartContainer {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100vh;
+          page-break-after: always;
+      }
+      button {
+          display: none; /* Ocultar el botón de impresión en el PDF */
+      }
+  }
