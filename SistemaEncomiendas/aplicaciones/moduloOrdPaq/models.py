@@ -22,9 +22,13 @@ class Pedido(models.Model):
     ]
 
     ESTADO_CHOICES = [
-        ('Enviado','Enviado'),
+        ('Prealerta','Prealerta'),
         ('Cancelado','Cancelado'),
-        ('Preparado','Preparado')
+        ('En Procesamiento','En Procesamiento'),
+        ('En Espera de Pago','En Espera de Pago'),
+        ('Pago Recibido','Pago Recibido'),
+        ('En Ruta','En Ruta'),
+        ('Entregado','Entregado'),
     ]
 
     #Relaciones con modelos - no se incluye paquete ya que un pedido puede tener muchos paquetes pero un paquete solo puede tener un pedido, la relacion ira en el modelo paquete
@@ -43,7 +47,7 @@ class Pedido(models.Model):
     punto_entrega = models.CharField(max_length=100)
     punto_recepcion = models.CharField(max_length=100)
     region = models.CharField(max_length=5, choices=REGION_CHOICES)
-    estado_pedido = models.CharField(max_length=10, choices=ESTADO_CHOICES)
+    estado_pedido = models.CharField(max_length=18, choices=ESTADO_CHOICES)
     recogido = models.BooleanField(default=False)#definir recogido como falso por defecto
     total_peso_pe = models.DecimalField(max_digits=10, decimal_places=2)
 

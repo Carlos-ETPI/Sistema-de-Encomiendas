@@ -1,0 +1,145 @@
+{% extends "base4.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block titulo %}Modificar estado de pedidos{% endblock titulo %}
+{% block estilos %}
+<style>
+    
+    
+</style>
+{% endblock estilos %}
+{% block body %}
+<div class="container mt-3">
+    <div class="row bg-secondary py-1">
+        <h3 class="mb-1 text-white">Estados de Pedidos</h3>
+    </div>
+    <div class="row align-items-center border mt-1" style="background-color: #F5F0EF;">
+        <div class="col-md-6">
+            <div class="d-flex ">
+                <p class="mb-1 font-weight-bold">
+                    <b>
+                </p> 
+            </div>
+        </div>
+        <div class="col-md-6 mb-1">
+            <div class="col-md-6">
+                <div class="d-flex ">
+                    <p class="mb-1 font-weight-bold">
+                        <b>
+                            <i class="fas fa-check-circle"></i> Modificar Estados </b>
+                    </p> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-3">
+        <div class="row align-items-center justify-content-center border mt-1" style="background-color: #F5F0EF;">
+            <div class="col-md-6 mb-3 mt-3">
+                <div class="d-flex justify-content-center">
+                    <div class="circles-container">
+                        <!-- Prealerta -->
+                        <div class="text-center">
+                            <div class="circle">
+                                <i class="fas fa-box" style="color: {% if form.instance.estado_pedido == 'Prealerta' %}#FFA500{% else %}#6b6565{% endif %}; font-size: 50px;"></i>
+                            </div>
+                            <div class="circle-text">Prealerta</div>
+                        </div>
+                        
+                        <!-- En Procesamiento -->
+                        <div class="text-center">
+                            <div class="circle">
+                                <i class="fas fa-box" style="color: {% if form.instance.estado_pedido == 'En Procesamiento' %}#00BFFF{% else %}#6b6565{% endif %}; font-size: 50px;"></i>
+                            </div>
+                            <div class="circle-text">En Procesamiento</div>
+                        </div>
+                        
+                        <!-- Espera de Pago -->
+                        <div class="text-center">
+                            <div class="circle">
+                                <i class="fas fa-box" style="color: {% if form.instance.estado_pedido == 'En Espera de Pago' %}#FFD700{% else %}#6b6565{% endif %}; font-size: 50px;"></i>
+                            </div>
+                            <div class="circle-text">Espera de Pago</div>
+                        </div>
+                        
+                        <!-- Pago Recibido -->
+                        <div class="text-center">
+                            <div class="circle">
+                                <i class="fas fa-box" style="color: {% if form.instance.estado_pedido == 'Pago Recibido' %}#008000{% else %}#6b6565{% endif %}; font-size: 50px;"></i>
+                            </div>
+                            <div class="circle-text">Pago Recibido</div>
+                        </div>
+                        
+                        <!-- En Ruta -->
+                        <div class="text-center">
+                            <div class="circle">
+                                <i class="fas fa-box" style="color: {% if form.instance.estado_pedido == 'En Ruta' %}#1E90FF{% else %}#6b6565{% endif %}; font-size: 50px;"></i>
+                            </div>
+                            <div class="circle-text">En Ruta</div>
+                        </div>
+                        
+                        <!-- Entregado -->
+                        <div class="text-center">
+                            <div class="circle" >
+                                <i class="fas fa-box" style="color: {% if form.instance.estado_pedido == 'Entregado' %}#32CD32{% else %}#6b6565{% endif %}; font-size: 50px;"></i>
+                            </div>
+                            <div class="circle-text">Entregado</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<section class="vh-100">
+    <div class="container py-3">
+        <div class="row d-flex justify-content-center h-100">
+            <div class="col col-12">
+                <div class="card" style="border-radius: 1rem;">
+                    <div class="row g-0">
+                        <div class="col d-flex align-items-center" style="background-color: #F5F0EF;border-radius: 1rem 1rem 1rem 1rem;">
+                            <div class="card-body p-4 p-lg-5 text-black d-flex justify-content-center align-items-center">
+                                <form class="w-75" action="" method="POST">
+                                    {% csrf_token %}
+                                    
+                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;"><b>Actualizar datos de pedido</b></h5>
+                                    <hr>
+                                    <div>
+                                        {% if form.errors %}
+                                            {% for field in form %}
+                                                {% if field.errors %}
+                                                    {% for error in field.errors %}
+                                                    <li class="text-danger"><b>{{error|escape}}</b></li>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="input-group input-group mb-3">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Estado del pedido: </b></span>
+                                        {{form.estado_pedido}}
+                                    </div>
+                                    
+                                    <!-- Aquí agregamos el campo textarea -->
+                                    <div class="mb-3">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Detalles de estado: </b></span>
+                                        <textarea class="form-control" id="mensaje" required name="mensaje" rows="4" placeholder="Escribe el mensaje aquí..."></textarea>
+                                    </div>
+                                    
+                                    <div class="pt-1 mb-4 d-flex justify-content-end">
+                                        <button class="btn btn-success btn-lg btn-block me-2" type="submit"><i class="far fa-save"></i>Guardar</button>
+                                        <a href="{% url 'moduloSeguimiento:cambiar_estado' %}">
+                                            <button class="btn btn-danger btn-lg btn-block" type="button"><i class="fas fa-times"></i>Cancelar</button>
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}
