@@ -6,18 +6,18 @@ import re
 from django.core.exceptions import ValidationError
 from .validators import validar_dui,validar_telefono, validar_password
 
-#----------------------------------formulario para Repartidores---------------------------------------------------------
+
 
 class RepartidorForm(forms.ModelForm):
     nombres = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombres'}))
     apellidos = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Apellidos'}))
-    DUI_persona = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'DUI','id':'DUI','maxlength':'10'}),validators=[validar_dui])
+    DUI_persona = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'DUI','id':'DUI','maxlength':'10'}))
     telefono_repartidor = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono','id':'tel','maxlength':'9'}),validators=[validar_telefono])
     class Meta:
         model = Repartidor
         fields = [ 'nombres', 'apellidos', 'DUI_persona', 'telefono_repartidor']
 
-##-----------------------------------formulario para crear empleados ---------------------------------------------
+#formulario para crear empleados
 class empleadoForm(forms.ModelForm):
     nombres = forms.CharField(
         widget=forms.TextInput(attrs={
@@ -39,7 +39,7 @@ class empleadoForm(forms.ModelForm):
             'placeholder':'DUI',
             'id':'DUI',
             'maxlength':'10',
-            'autocomplete':'off'}),validators=[validar_dui]
+            'autocomplete':'off'})
         )
     telefono = forms.CharField(
         widget=forms.TextInput(attrs={
@@ -185,128 +185,9 @@ class empleadoUpdateForm(forms.ModelForm):
             raise ValidationError('El dui no esta disponible.')
         return dui
 
-#Eliminar esta clase 
 class ClienteForm(forms.ModelForm):
     duiCliente=forms.CharField(validators=[validar_dui])
     class meta:
         model= Cliente
         fields = [ 'nombreCliente', 'apellidoCliente', 'duiCliente', 'nacionalidadCliente','telefonoCliente','emailCliente']
         
-
-        
-
-#----------------------------------formulario para Clientes---------------------------------------------------------
-#Formulario para crear un cliente nuevo
-class clienteForm(forms.ModelForm):
-    nombre_cliente = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'nombres',
-            'maxlength':'50',
-            'autocomplete':'off'})
-        )
-    apellido_cliente = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'Apellidos',
-            'maxlength':'50',
-            'autocomplete':'off'})
-        )
-    dui_cliente = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'DUI',
-            'id':'DUI',
-            'maxlength':'10',
-            'autocomplete':'off'}),validators=[validar_dui]
-        )
-    nacionalidad_cliente = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'Nacionalidad',
-            'maxlength':'15',
-            'autocomplete':'off'})
-    )
-    telefono_cliente = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'Telefono',
-            'maxlength':'9',
-            'autocomplete':'off'}),validators=[validar_telefono]
-        )
-    email_cliente = forms.CharField(
-        widget=forms.EmailInput(attrs={
-            'class':'form-control',
-            'placeholder':'youremail@extension.com',
-            'autocomplete':'off'})
-        )
-    
-    class Meta:
-        model = Cliente
-        fields = ['nombre_cliente', 'apellido_cliente', 'dui_cliente', 'nacionalidad_cliente', 'telefono_cliente', 'email_cliente']
-        
-    #email unico
-    def clean_email(self):
-        email_cliente = self.cleaned_data.get('email')
-        if Cliente.objects.filter(email=email_cliente).exists():
-            raise ValidationError('La direccion de correo electronico ya esta en uso.')
-        return email_cliente
-    
-    #dui unico
-    def clean_dui(self):
-        dui_cliente = self.cleaned_data.get('dui')
-        if Cliente.objects.filter(dui=dui_cliente ).exists():
-            raise ValidationError('El dui no esta disponible.')
-        return dui_cliente 
-        
-        
-#formulario para actualizar datos de cliente 
-class clienteUpdateForm(forms.ModelForm):
-    nombre_cliente = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'nombres',
-            'maxlength':'50',
-            'autocomplete':'off'})
-        )
-    apellido_cliente = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'Apellidos',
-            'maxlength':'50',
-            'autocomplete':'off'})
-        )
-    dui_cliente = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'DUI',
-            'id':'DUI',
-            'maxlength':'10',
-            'autocomplete':'off'}),validators=[validar_dui]
-        )
-    nacionalidad_cliente = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'Nacionalidad',
-            'maxlength':'15',
-            'autocomplete':'off'})
-    )
-    telefono_cliente = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'class':'form-control',
-            'placeholder':'Telefono',
-            'maxlength':'9',
-            'autocomplete':'off'}),validators=[validar_telefono]
-        )
-    email_cliente = forms.CharField(
-        widget=forms.EmailInput(attrs={
-            'class':'form-control',
-            'placeholder':'youremail@extension.com',
-            'autocomplete':'off'})
-        )
-    
-    class Meta:
-        model = Cliente
-        fields = ['nombre_cliente', 'apellido_cliente', 'dui_cliente', 'nacionalidad_cliente', 'telefono_cliente', 'email_cliente']
-        
-#-----------------------------------------------------------------------------------------------

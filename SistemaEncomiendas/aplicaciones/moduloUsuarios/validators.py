@@ -42,3 +42,8 @@ def validar_password(password):
     #caracter especial
     if not re.search(r'[@#$%^&+=*]',password):
         raise ValidationError("La contraseña debe contener al menos un caracter especial (@, #, $, %, ^, &, +, =).")
+    
+def validar_vacio(data):
+    # Verificar que la data no esté vacía
+    if not data or data.strip() == "":
+        raise ValidationError("El campo no puede estar vacío.")

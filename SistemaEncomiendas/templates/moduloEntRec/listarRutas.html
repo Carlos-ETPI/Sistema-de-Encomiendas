@@ -40,20 +40,21 @@
         <tbody>
             {% for ruta in rutas %}
             <tr>
-                <td>{{ rutas.id_ruta }}</td>
-                <td>{{ rutas.nombre_ruta }}</td>
-                <td>{{ rutas. }}</td>
-                <td>{{ repartidor.repartidor}}</td>
-                <td>{{ repartidor.zona }}</td>
+                <td>{{ ruta.id_ruta }}</td>
+                <td>{{ ruta.nombre_ruta }}</td>
+                <td>{{ ruta.nombre_ruta }}</td>
+                <td>{{ ruta.id_repartidor.nombres}}</td>
+                <td>{{ ruta.zona }}</td>
                 <td class="d-flex justify-content-center">
-                    <a href="{% url 'moduloUsuarios:modificar_repartidor' repartidor.id_repartidor %}" class="icon-link text-primary mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
+                    <a href="{% url 'moduloEntRec:EditarRuta' ruta.id_ruta %}" class="icon-link text-primary mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
                         <i class="fas fa-user-edit"></i>
                         <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Modificar</span>
                     </a>
-                    <a href="{% url 'moduloUsuarios:ver_repartidor' repartidor.id_repartidor%}" class="icon-link text-success mx-auto mx-2 d-flex flex-column position-relative"  style="font-size: 20px;">
+                    <a href="" class="icon-link text-success mx-auto mx-2 d-flex flex-column position-relative"  style="font-size: 20px;">
                         <i class="fa fa-id-card" aria-hidden="true"></i>
                         <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Ver</span>
                     </a>
+                    <!--  
                     <button type="button" class="icon-link text-danger mx-auto mx-2 d-flex flex-column position-relative" 
                         style="font-size: 20px; padding: 0; border: none; background: none;" 
                         data-bs-toggle="modal" data-bs-target="#eliminarModal" 
@@ -63,6 +64,7 @@
                         <i class="fas fa-trash-alt"></i>
                         <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Eliminar</span>
                     </button>
+                    -->
                 </td>
             </tr>
             {% endfor %}
@@ -82,7 +84,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <form id="eliminarForm" method="POST"  action="{% url 'moduloUsuarios:eliminar_repartidor' 1%}">
+                <form id="eliminarForm" method="POST"  action="{% url 'moduloEntRec:EliminarRuta' 1%}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">Eliminar</button>
                 </form>

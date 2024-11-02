@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.db.models import Sum, Count, F
 from django.db.models.functions import TruncMonth
 from django.contrib import messages 
-
+import json
 
 
 def reporte_costos_viajes(request):
@@ -106,11 +106,11 @@ def reporte_costos_viajes(request):
             'mes_costo_mas_alto': mes_costo_mas_alto,
             'mes_costo_mas_bajo': mes_costo_mas_bajo,
             'cantidad_viajes': cantidad_viajes,
-            'labels': labels,
-            'data_max': data_max,
-            'data_min': data_min,
-            'labels_g2': labels_g2,
-            'data_g2': data_g2})
+            'labels': json.dumps(labels),
+            'data_max': json.dumps(data_max),
+            'data_min': json.dumps(data_min),
+            'labels_g2': json.dumps(labels_g2),
+            'data_g2': json.dumps(data_g2)})
     
     
     
