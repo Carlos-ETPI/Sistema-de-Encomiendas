@@ -24,6 +24,7 @@ urlpatterns = [
     path('security/', include('aplicaciones.moduloSeguridad.urls')),
     path('usuarios/',include('aplicaciones.moduloUsuarios.urls')),
     path('viajes/',include('aplicaciones.moduloViajes.urls')),
+    path('articulos/',include('aplicaciones.moduloArticulos.urls')),
     path('',views.home,name='home'),
     
 
