@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from .forms import CrearViajeForm
 from .models import Viaje
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest,JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
 
 def group_required(group_name):
     def decorator(view_func):
@@ -53,7 +55,7 @@ def ver_viaje(request,pk):
 def crear_viaje(request):
     mensaje = None     #Mensaje de validacion
     if request.method == 'POST':
-        form = CrearViajeForm(request.POST)   #Se crea el formulario (defino en forms.py)
+        form = CrearViajeForm(request.POST)         #Se crea el formulario (definido en forms.py)
         if form.is_valid():
             form.save()
             mensaje='registro exitoso'
@@ -88,7 +90,21 @@ def editar_viaje(request,pk):
 #@group_required('Jefe')
 def eliminar_viaje(request, pk):
     viaje = get_object_or_404(Viaje, id_viaje=pk)
-    viaje.delete()
-    return redirect('/viajes/')
+    
+    if request.method == "POST":
+        try:
+            viaje.delete()
+            # Agregar mensaje de éxito
+            messages.success(request, 'Viaje eliminado correctamente!')
+        except Exception as e:
+            # Agregar mensaje de error si ocurre una excepción
+            messages.error(request, f'Error al eliminar el viaje: {str(e)}')
+
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'message': 'Viaje eliminado correctamente!'})
+        return redirect("moduloViajes:listaviajes")
+
+    return render(request, "moduloViajes/viajes.html", {"viaje": viaje})
+    
 
 

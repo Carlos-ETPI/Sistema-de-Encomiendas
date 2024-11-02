@@ -1,9 +1,7 @@
 from django.db import models
-#from .models import CustomUser
-#from aplicaciones.moduloUsuarios.models import CustomUser as Usuario
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-# Create your models here.
+# Modulo de viaje.
 class Viaje(models.Model):
     id_viaje = models.AutoField(primary_key=True)
     fecha_ida = models.DateField()

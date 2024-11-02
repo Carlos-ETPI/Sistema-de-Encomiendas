@@ -23,13 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('security/', include('aplicaciones.moduloSeguridad.urls')),
     path('usuarios/',include('aplicaciones.moduloUsuarios.urls')),
-    path('pedidos/',include('aplicaciones.moduloOrdPaq.urls')),
     path('viajes/',include('aplicaciones.moduloViajes.urls')),
-    path('Entrega/',include('aplicaciones.moduloEntRec.urls')),
+    path('articulos/',include('aplicaciones.moduloArticulos.urls')),
     path('',views.home,name='home'),
-    path('Reportes/',include('aplicaciones.moduloReportes.urls')),
-    path('Seguimiento/',include('aplicaciones.moduloSeguimiento.urls')),
-    
     
 
 ]
