@@ -23,6 +23,7 @@ class Articulo(models.Model):
     costo_encomienda = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     costo_total_envio = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
+
 class TipoArticulo(models.Model):
     CATEGORIA_CHOICES=[
         ('PRENDAS DE VESTIR Y ACCESORIOS PARA HOMBRE', 'PRENDAS DE VESTIR Y ACCESORIOS PARA HOMBRE'),

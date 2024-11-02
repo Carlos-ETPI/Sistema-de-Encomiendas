@@ -1,9 +1,9 @@
 from django.db import models
 from ..moduloUsuarios.models import Cliente
 from ..moduloViajes. models import Viaje
-from ..moduloSeguimiento.models import Ruta,Recordatorio
+from ..moduloSeguimiento.models import Recordatorio
 from ..moduloArticulos.models import Articulo
-
+from ..moduloEntRec.models import Ruta
 # Create your models here.
 class Paquete(models.Model):
     id_paquete = models.AutoField(primary_key=True)

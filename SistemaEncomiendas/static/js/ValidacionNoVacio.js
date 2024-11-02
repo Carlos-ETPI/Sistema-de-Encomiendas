@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             // Manejar la respuesta
-            console.log(data);  // Puedes imprimir la respuesta para verificar
-            location.reload();  // Recargar la página para actualizar la lista
+            console.log(data);  
+            location.reload();  
         })
         .catch(error => console.error('Error:', error));
     });
@@ -111,3 +111,6 @@ document.addEventListener('DOMContentLoaded', function() {
         this.value = formattedValue;
     });
 });
+
+
+  

@@ -1,17 +1,15 @@
-<!--Vista nueva de Eliminar Cliente -->
-
 {% extends "base4.html" %}
 
-{% block title %}Eliminar Cliente{% endblock %}
+{% block title %}Eliminar Empleado{% endblock %}
 
 {% block body %}
 <div class="container mt-3">
     <div class="row bg-secondary py-1">
-        <h3 class="mb-1 text-white">Eliminar Cliente</h3>
+        <h3 class="mb-1 text-white">Eliminar Empleado</h3>
     </div>
     <div class="row align-items-center border mt-1" style="background-color: #F5F0EF;">
         <div class="col-md-6">
-            <p>¿Estás seguro que deseas eliminar al cliente seleccionado {{ cliente.nombreCliente }} {{ cliente.apellidoCliente }}?</p>
+            <p>¿Estás seguro que deseas eliminar al empleado {{ empleado.nombres }} {{ empleado.apellidos }}?</p>
         </div>
     </div>
 </div>
@@ -28,7 +26,7 @@
                                     <button class="btn btn-danger btn-lg me-2" type="submit">
                                         <i class="far fa-trash-alt"></i> Confirmar Eliminación
                                     </button>
-                                    <a href="{% url 'moduloUsuarios:crudCliente' %}" class="btn btn-secondary btn-lg">
+                                    <a href="{% url 'moduloUsuarios:crud_empleados' %}" class="btn btn-secondary btn-lg">
                                         <i class="fas fa-times"></i> Cancelar
                                     </a>
                                 </form>
