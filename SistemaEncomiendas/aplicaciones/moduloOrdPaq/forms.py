@@ -1,8 +1,7 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Pedido, Viaje, Cliente, Ruta, Recordatorio, CustomUser
-
-import re
+from .models import Pedido, Viaje, Cliente, Ruta, Recordatorio
+from ..moduloUsuarios.models import CustomUser
 from django.core.exceptions import ValidationError
 
 #Formulario para crear pedido

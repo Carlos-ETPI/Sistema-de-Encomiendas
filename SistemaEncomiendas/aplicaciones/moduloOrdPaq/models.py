@@ -1,22 +1,16 @@
 from django.db import models
 from ..moduloUsuarios.models import Cliente
-from ..moduloViajes. models import Viaje
+from ..moduloViajes.models import Viaje
 from ..moduloSeguimiento.models import Recordatorio
 from ..moduloArticulos.models import Articulo
 from ..moduloEntRec.models import Ruta
-# Create your models here.
-class Paquete(models.Model):
-    id_paquete = models.AutoField(primary_key=True)
-    id_articulo = models.ForeignKey(Articulo, on_delete=models.RESTRICT)
-    destinatario = models.CharField(max_length=50)
-    total_peso_pa = models.DecimalField(max_digits=10, decimal_places=2)
-    
+
+
 class Pedido(models.Model):
     id_pedido = models.AutoField(primary_key=True)
     id_viaje = models.ForeignKey(Viaje, on_delete=models.RESTRICT)
     id_cliente = models.ForeignKey(Cliente, on_delete=models.RESTRICT)
     id_ruta = models.ForeignKey(Ruta, on_delete=models.RESTRICT)
-    id_paquete = models.ForeignKey(Paquete, on_delete=models.RESTRICT)
     id_ubicacion = models.ForeignKey(Recordatorio, on_delete=models.RESTRICT)
     numero_de_orden = models.CharField(max_length=20)
     fecha_pedido = models.DateField()
@@ -27,3 +21,12 @@ class Pedido(models.Model):
     recogido = models.BooleanField()
     total_peso_pe = models.DecimalField(max_digits=10, decimal_places=2)
     img_pedido = models.CharField(max_length=255)
+
+
+
+class Paquete(models.Model):
+    id_paquete = models.AutoField(primary_key=True)
+    id_pedido = models.ForeignKey(Pedido, on_delete=models.RESTRICT)
+    destinatario = models.CharField(max_length=50)
+    total_peso_pa = models.DecimalField(max_digits=10, decimal_places=2)
+    

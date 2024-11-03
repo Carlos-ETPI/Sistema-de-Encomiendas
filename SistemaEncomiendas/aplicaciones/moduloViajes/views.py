@@ -17,18 +17,14 @@ def group_required(group_name):
     return decorator
 
 # Vista para mostrar el listado de viajes ordenados segun el id
-#@group_required('Jefe')
+@group_required('Jefe')
 def mostrar_viajes(request):
-    viajes_list = Viaje.objects.all().order_by('id_viaje')
-    
-    #for viaje in viajes_list:
-    #   total=(viaje.cantidad_personas*viaje.precio_boleto_ida) +(viaje.cantidad_personas*viaje.precio_boleto_retorno)
-    
+    viajes_list = Viaje.objects.all().order_by('id_viaje') 
     return render(request, 'moduloViajes/viajes.html', {'viajes': viajes_list})
 
 
 # Vista para mostrar el listado de viajes filtrados por el destino
-#@group_required('Jefe')
+@group_required('Jefe')
 def mostrar_viajes_filtrados(request):
     if request.method == 'POST':
         destino = request.POST.get('destino', '')
@@ -41,7 +37,7 @@ def mostrar_viajes_filtrados(request):
 
 
  #Vista para mostrar los datos de un viaje
-#@group_required('Jefe')
+@group_required('Jefe')
 def ver_viaje(request,pk):
     viaje = get_object_or_404(Viaje, id_viaje=pk)
     viaje.precio_boleto_ida = str(viaje.precio_boleto_ida).replace(',', '.')
@@ -51,7 +47,7 @@ def ver_viaje(request,pk):
 
 
 # Vista para crear un nuevo viaje
-#@group_required('Jefe')
+@group_required('Jefe')
 def crear_viaje(request):
     mensaje = None     #Mensaje de validacion
     if request.method == 'POST':
@@ -68,7 +64,7 @@ def crear_viaje(request):
 
 
 # Vista para editar un viaje
-#@group_required('Jefe')
+@group_required('Jefe')
 def editar_viaje(request,pk):
     viaje = get_object_or_404(Viaje, id_viaje=pk)
     viaje.precio_boleto_ida = str(viaje.precio_boleto_ida).replace(',', '.')
@@ -87,7 +83,7 @@ def editar_viaje(request,pk):
     return render(request, 'moduloViajes/editarViaje.html',{'viaje':viaje})
     
 # Metodo para eliminar un viaje
-#@group_required('Jefe')
+@group_required('Jefe')
 def eliminar_viaje(request, pk):
     viaje = get_object_or_404(Viaje, id_viaje=pk)
     

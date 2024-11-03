@@ -13,8 +13,30 @@ class Articulo(models.Model):
     
     id_articulo = models.AutoField(primary_key=True)
     id_servicio = models.ForeignKey('Servicio', on_delete=models.RESTRICT)
-    id_ti_articulo = models.ForeignKey('TipoArticulo', on_delete=models.RESTRICT)
-    id_lis_marcas = models.ForeignKey('ListadoMarcas', on_delete=models.RESTRICT)
+    id_ti_articulo = models.ForeignKey('TipoArticulo', on_delete=models.RESTRICT, blank=True, null=True)
+    id_lis_marcas = models.ForeignKey('ListadoMarcas', on_delete=models.RESTRICT, blank=True, null=True)
+    nombre_articulo = models.CharField(max_length=100)
+    peso = models.DecimalField(max_digits=10, decimal_places=2)
+    cantidad = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+    estado = models.CharField(max_length=30,choices=TIPO_ESTADO_CHOICES,default='Sin Estado')
+    impuestos_envio=models.DecimalField(max_digits=10, decimal_places=2,default=0)
+    costo_encomienda = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    costo_total_envio = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+class Articulo_Auxiliar(models.Model):
+    
+    TIPO_ESTADO_CHOICES = [
+        ('Sin Estado', 'Prestigio'),
+        ('Con Encomendistas', 'Lujo'),
+        ('En Aduana', 'Lujo'),
+        ('Enviado', 'Lujo'),
+        ('Entregado', 'Lujo'),
+    ]
+    
+    id_articulo = models.AutoField(primary_key=True)
+    id_servicio = models.ForeignKey('Servicio', on_delete=models.RESTRICT)
+    id_ti_articulo = models.ForeignKey('TipoArticulo', on_delete=models.RESTRICT, blank=True, null=True)
+    id_lis_marcas = models.ForeignKey('ListadoMarcas', on_delete=models.RESTRICT, blank=True, null=True)
     nombre_articulo = models.CharField(max_length=100)
     peso = models.DecimalField(max_digits=10, decimal_places=2)
     cantidad = models.IntegerField(validators=[MinValueValidator(0)], default=0)

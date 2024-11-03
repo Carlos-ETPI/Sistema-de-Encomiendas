@@ -70,13 +70,13 @@
                                 Usuarios
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a href="{% url 'moduloUsuarios:crudCliente' %}" class="dropdown-item">Clientes</a></li>
-                                <li><a href="{% url 'moduloUsuarios:users' %}" class="dropdown-item">Empleados</a></li>
+                                <li><a href="{% url 'moduloUsuarios:crud_cliente' %}" class="dropdown-item">Clientes</a></li>
+                                <li><a href="{% url 'moduloUsuarios:crud_empleado' %}" class="dropdown-item">Empleados</a></li>
                                 <li><a href="{% url 'moduloUsuarios:crud_repartidor' %}" class="dropdown-item">Repartidor</a></li>  
                             </ul>
                         </div>
                         <a href="{%url 'moduloViajes:filtroviajes'%}" class="nav-item nav-link">Viajes</a>
-                        <a href="service.html" class="nav-item nav-link ">Services</a>
+                        <a href="{% url 'moduloArticulos:cotizacion'%}" class="nav-item nav-link ">Cotizar</a>
                         <a href="{% url 'moduloEntRec:ListarRutas'%}" class="nav-item nav-link">Pricing</a>
                         
                         <a href="contact.html" class="nav-item nav-link">Contact</a>
