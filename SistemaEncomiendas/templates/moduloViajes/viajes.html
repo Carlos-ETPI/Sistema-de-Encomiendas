@@ -79,15 +79,10 @@
                             <i class="fas fa-user-edit"></i>
                             <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Editar</span>
                         </a>
-                        <button type="button" class="icon-link text-danger mx-auto mx-2 d-flex flex-column position-relative"
-                            style="font-size: 20px; padding: 0; border: none; background: none;" 
-                            data-bs-toggle="modal" data-bs-target="#eliminarModal" 
-                            data-item-id="{{ v.id_viaje }}" 
-                            data-item-name="{{ v.destino }}" 
-                            data-item-type="viajes/eliminar">
+                        <a href="{%url 'moduloViajes:eliminarviaje' pk=v.id_viaje %}" class="icon-link text-danger mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
                             <i class="fas fa-trash-alt"></i>
-                            <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Eliminar</span>                            
-                        </button>
+                            <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Eliminar</span>
+                        </a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -96,30 +91,8 @@
         
     </div>
 
-
-<!-- MODAL DE ELIMINACION-->
-<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="eliminarModalLabel">Eliminar Viaje</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>¿Estás seguro de que deseas eliminar el viaje con destino a <b><span id="itemNameSpan"></span></b>?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <form id="eliminarForm" method="POST"  action="{% url 'moduloViajes:eliminarviaje' 1%}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
     
 {% endblock body %}
-<!--{% block javaS %}
+{% block javaS %}
     <script src="{%static 'js/ValidacionNoVacio'%}"></script>
-{% endblock javaS %}-->
+{% endblock javaS %}
