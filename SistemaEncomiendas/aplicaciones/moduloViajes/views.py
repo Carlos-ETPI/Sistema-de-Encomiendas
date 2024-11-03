@@ -3,19 +3,12 @@ from .forms import CrearViajeForm
 from .models import Viaje
 from django.http import HttpResponse, HttpRequest
 from django.contrib.auth.decorators import login_required
+from ..moduloUsuarios.views import group_required
 
-def group_required(group_name):
-    def decorator(view_func):
-        @login_required
-        def _wrapped_view(request, *args, **kwargs):
-            if request.user.groups.filter(name=group_name).exists():
-                return view_func(request, *args, **kwargs)
-            return redirect('seguridad_app:noAccess')
-        return _wrapped_view
-    return decorator
+
 
 # Vista para mostrar el listado de viajes ordenados segun el id
-#@group_required('Jefe')
+@group_required('Jefe')
 def mostrar_viajes(request):
     viajes_list = Viaje.objects.all().order_by('id_viaje')
     
@@ -26,7 +19,7 @@ def mostrar_viajes(request):
 
 
 # Vista para mostrar el listado de viajes filtrados por el destino
-#@group_required('Jefe')
+@group_required('Jefe')
 def mostrar_viajes_filtrados(request):
     if request.method == 'POST':
         destino = request.POST.get('destino', '')
@@ -39,7 +32,7 @@ def mostrar_viajes_filtrados(request):
 
 
  #Vista para mostrar los datos de un viaje
-#@group_required('Jefe')
+@group_required('Jefe')
 def ver_viaje(request,pk):
     viaje = get_object_or_404(Viaje, id_viaje=pk)
     viaje.precio_boleto_ida = str(viaje.precio_boleto_ida).replace(',', '.')
@@ -49,7 +42,7 @@ def ver_viaje(request,pk):
 
 
 # Vista para crear un nuevo viaje
-#@group_required('Jefe')
+@group_required('Jefe')
 def crear_viaje(request):
     mensaje = None     #Mensaje de validacion
     if request.method == 'POST':

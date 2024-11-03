@@ -34,13 +34,13 @@ def group_required(group_name):
 #Vistas para el submodulo de usuarios Gestion de Clientes 
 #vista de crud Clientes
 
-#@group_required('Jefe')
+@group_required('Jefe')
 def crudCliente(request):
     client_list = Cliente.objects.filter(estado=True)
     return render(request, 'moduloUsuarios/crudCliente.html', {'client_list': client_list})
 
 #vista agregarCliente
-#@group_required('Jefe') 
+@group_required('Jefe') 
 def agregarClientes(request):
     if request.method == 'POST':
         # Recuperar los datos del formulario
@@ -200,7 +200,7 @@ def verCliente(request, pk):
 
 #---------------------------Gestion de empleados---------------------------------
 #Vista para listar empleados
-#@method_decorator(group_required('Jefe'), name='dispatch')
+@method_decorator(group_required('Jefe'), name='dispatch')
 class crud_empleados(ListView):
     model = CustomUser
     template_name = "moduloUsuarios/crudEmpleado.html"
@@ -211,6 +211,7 @@ class crud_empleados(ListView):
         return CustomUser.objects.filter(is_superuser=False, is_active=True).order_by('date_joined')
 
 #vista para crear empleados
+@method_decorator(group_required('Jefe'), name='dispatch')
 class crear_empleado(CreateView):
     form_class = empleadoForm
     success_url = reverse_lazy('moduloUsuarios:crud_empleado')
@@ -254,13 +255,14 @@ class modificar_empleado(UpdateView):
 
 #--------------------------- Modulo Repartidor----------------------
 #vista crear
+@method_decorator(group_required('Jefe'), name='dispatch')
 class crear_repartidor(CreateView):
     form_class = RepartidorForm
     success_url = reverse_lazy('moduloUsuarios:crud_repartidor')
     template_name = 'moduloUsuarios/crearRepartidor.html'
 
 #vista listar repartidores
-#@method_decorator(group_required('Jefe'), name='dispatch')
+@method_decorator(group_required('Jefe'), name='dispatch')
 class crud_repartidor(ListView):
     template_name = "moduloUsuarios/crudRepartidor.html"
     model = Repartidor

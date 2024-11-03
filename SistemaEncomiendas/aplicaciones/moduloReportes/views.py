@@ -9,8 +9,9 @@ from django.db.models import Sum, Count, F
 from django.db.models.functions import TruncMonth
 from django.contrib import messages 
 import json
+from ..moduloUsuarios .views import group_required
 
-
+@group_required('Jefe')
 def reporte_costos_viajes(request):
 
     if request.method == 'POST':
@@ -115,7 +116,7 @@ def reporte_costos_viajes(request):
     
     
 
-
+@group_required('Jefe')
 def pdf_reporte_costos_viajes(request):
     # Obtener todos los viajes
     viajes = Viaje.objects.all()

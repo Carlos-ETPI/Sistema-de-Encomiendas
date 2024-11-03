@@ -7,7 +7,10 @@ from django.conf import settings
 from django.http import HttpResponse
 from ..moduloSeguimiento.forms import estadosForm
 from django.urls import reverse_lazy
+from ..moduloUsuarios .views import group_required
+from django.utils.decorators import method_decorator
 # Create your views here.
+@method_decorator(group_required('Jefe'), name='dispatch')
 class ListarEstados(ListView):
     model = Pedido
     template_name = "moduloSeguimiento/listarPedidoEstado.html"
@@ -18,11 +21,11 @@ class ListarEstados(ListView):
         if estado and estado != "all":
             return Pedido.objects.filter(estado_pedido=estado)
         return Pedido.objects.all()
-    
+@group_required('Jefe')   
 def prueba_vista(request):
     return render(request, 'moduloSeguimiento/modificarEstado.html', {})
 
-
+@method_decorator(group_required('Jefe'), name='dispatch')
 class CrearEstado(UpdateView):
     template_name = "moduloSeguimiento/modificarEstado.html"
     model = Pedido

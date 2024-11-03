@@ -6,12 +6,15 @@ from .forms import RutaForm
 from ..moduloUsuarios.models import Repartidor
 from django.urls import reverse_lazy
 from django.views.generic import CreateView,ListView,UpdateView,DeleteView,DetailView
+from ..moduloUsuarios.views import group_required
+from django.utils.decorators import method_decorator
 # Create your views here.
-
+@method_decorator(group_required('Jefe'), name='dispatch')
 class ListarRuta(ListView):
     model = Ruta
     template_name = 'moduloEntRec/listarRutas.html'
     context_object_name = 'rutas'
+@method_decorator(group_required('Jefe'), name='dispatch')
 class CrearRuta(CreateView):
     model = Ruta
     form_class = RutaForm
@@ -22,7 +25,7 @@ class CrearRuta(CreateView):
         form = super().get_form(*args, **kwargs)
         form.fields['id_repartidor'].queryset = Repartidor.objects.all() 
         return form
-    
+@method_decorator(group_required('Jefe'), name='dispatch')
 class EditarRuta(UpdateView):
     model = Ruta
     form_class = RutaForm
@@ -34,12 +37,13 @@ class EditarRuta(UpdateView):
         form.fields['id_repartidor'].queryset = Repartidor.objects.all() 
         return form
 
+@method_decorator(group_required('Jefe'), name='dispatch')
 class VerRuta(DetailView):
     model=Ruta
     template_name='moduloEntRec/verRuta.html'
     context_object_name='rutas'
     
-
+group_required('Jefe')
 def EliminarRuta(request, pk):
     ruta = get_object_or_404(Ruta, pk=pk)
 

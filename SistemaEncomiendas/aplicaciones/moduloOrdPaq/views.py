@@ -6,6 +6,8 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.views.generic import UpdateView,ListView,CreateView
 from django.views.decorators.http import require_POST
+from ..moduloUsuarios.views import group_required
+from django.utils.decorators import method_decorator
 
 #importacion de formularios
 from .forms import pedidoForm, actualizarPedidoForm
@@ -16,6 +18,7 @@ from .models import Pedido
 # Create your views here.
 #---------------------------Gestion de pedidos----------------------------------
 #vista para listas pedidos
+@method_decorator(group_required('Jefe'), name='dispatch')
 class crudPedido(ListView):
     model = Pedido
     template_name = "moduloOrdPaq/crudPedido.html"
@@ -26,6 +29,7 @@ class crudPedido(ListView):
         return Pedido.objects.order_by('fecha_creacion')
 
 #Vista para crear pedido
+@method_decorator(group_required('Jefe'), name='dispatch')
 class crearPedido(CreateView):
     form_class = pedidoForm
     success_url = reverse_lazy('moduloOrdPaq:crudPedido')
@@ -36,6 +40,7 @@ class crearPedido(CreateView):
         return super().form_valid(form)
     
 #vista para actulizar pedido
+@method_decorator(group_required('Jefe'), name='dispatch')
 class modificarPedido(UpdateView):
     model = Pedido
     template_name = 'moduloOrdPaq/modificarPedido.html'
@@ -45,7 +50,7 @@ class modificarPedido(UpdateView):
     def form_valid(self, form):
         messages.success(self.request,"El pedido se ha actulizado de forma exitosa")
         return super().form_valid(form)
-
+group_required('Jefe')
 #vista para eliminar pedido
 def eliminarPedido(request,pk):
     pedido = get_object_or_404(Pedido, pk=pk)
@@ -64,6 +69,7 @@ def eliminarPedido(request,pk):
     return render(request, "moduloOrdPaq/eliminarPedido.html",{"pedido":pedido})
 
 #vista para revisar datos del pedido realizado
+group_required('Jefe')
 def verPedido(request, pk):
     pedido = get_object_or_404(Pedido, id_pedido=pk)
     return render(request,'moduloOrdPaq/verPedido.html',{'pedido':pedido})
