@@ -95,3 +95,28 @@
           display: none; /* Ocultar el botón de impresión en el PDF */
       }
   }
+
+  .circles-container {
+    display: flex;
+    justify-content: center; /* Centra los círculos horizontalmente */
+    gap: 20px; /* Espacio entre los círculos */
+}
+
+.circle {
+    width: 100px; /* Ancho del círculo */
+    height: 100px; /* Alto del círculo */
+    border-radius: 50%; /* Hace que el div sea circular */
+    background-color: white; /* Color de fondo del círculo */
+    display: flex; /* Usar flexbox para centrar el ícono */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra del círculo */
+    margin: 0 10px; /* Espacio entre círculos */
+}
+
+.circle-text {
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    margin-top: 5px;
+}

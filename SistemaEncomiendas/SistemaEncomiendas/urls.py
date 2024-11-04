@@ -32,5 +32,6 @@ urlpatterns = [
 
     path('',views.home,name='home'),
     path('Reportes/',include('aplicaciones.moduloReportes.urls')),
+    path('Seguimiento/',include('aplicaciones.moduloSeguimiento.urls')),
     
 ]

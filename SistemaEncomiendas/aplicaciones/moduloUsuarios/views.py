@@ -2,13 +2,13 @@
 from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
-from .models import CustomUser,Repartidor, Cliente
+from .models import CustomUser,Repartidor
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.contrib import messages
 from django.views.generic import UpdateView,ListView,CreateView,UpdateView
-from .forms import RepartidorForm, empleadoForm, empleadoUpdateForm, clienteForm, ClienteForm, clienteUpdateForm
+from .forms import RepartidorForm, empleadoForm, empleadoUpdateForm
 from django.urls import reverse_lazy
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -31,6 +31,173 @@ def group_required(group_name):
     return decorator
 
 
+#Vistas para el submodulo de usuarios Gestion de Clientes 
+#vista de crud Clientes
+
+@group_required('Jefe')
+def crudCliente(request):
+    client_list = Cliente.objects.filter(estado=True)
+    return render(request, 'moduloUsuarios/crudCliente.html', {'client_list': client_list})
+
+#vista agregarCliente
+@group_required('Jefe') 
+def agregarClientes(request):
+    if request.method == 'POST':
+        # Recuperar los datos del formulario
+        nombreCliente = request.POST['nombres']
+        apellidoCliente = request.POST['apellidos']
+        duiCliente = request.POST['dui']
+        nacionalidadCliente = request.POST['nacionalidad']
+        telefonoCliente = request.POST['telefono']
+        emailCliente = request.POST['email']
+
+        # Validaciones adicionales
+        # No campos vacíos
+        if not nombreCliente or not apellidoCliente or not duiCliente or not nacionalidadCliente or not telefonoCliente or not emailCliente:
+            messages.error(request, 'Por favor complete todos los campos obligatorios')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+
+        # Verificar que el DUI es único
+        if Cliente.objects.filter(duiCliente=duiCliente).exists():
+            messages.error(request, 'Error al ingresar documento de identidad, el número ingresado ya está registrado')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+
+        # Verificar email
+        if Cliente.objects.filter(emailCliente=emailCliente).exists():
+            messages.error(request, 'La dirección de correo electrónico ya está en uso, por favor ingrese otro email')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+
+        # Validación del formato del email
+        try:
+            validate_email(emailCliente)
+        except ValidationError:
+            messages.error(request, 'El formato del correo electrónico no es válido')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+
+        # Validación de parámetros
+        if len(nombreCliente) > 50:
+            messages.error(request, 'Nombre demasiado extenso, trate de usar abreviaciones')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+
+        if len(apellidoCliente) > 50:
+            messages.error(request, 'Apellido demasiado extenso, trate de usar abreviaciones')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+
+        if len(duiCliente) != 10:
+            messages.error(request, 'Número de documento de identidad no válido')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+
+        if len(telefonoCliente) != 9:
+            messages.error(request, 'Número de teléfono no válido')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+
+        try:
+            # Creación de cliente
+            cliente = Cliente.objects.create(
+                nombreCliente=nombreCliente,
+                apellidoCliente=apellidoCliente,
+                duiCliente=duiCliente,
+                nacionalidadCliente=nacionalidadCliente,
+                telefonoCliente=telefonoCliente,
+                emailCliente=emailCliente
+            )
+            return redirect('/usuarios/crudCliente')  # o cualquier otra página después del registro
+        except Exception as e:
+            messages.error(request, f'Error al crear el cliente: {str(e)}')
+            return render(request, 'moduloUsuarios/crearCliente.html')
+    else:
+        return render(request, 'moduloUsuarios/crearCliente.html')
+
+#renderizar html crearCliente
+@group_required('Jefe')
+def newCliente(request):
+    return render(request, 'moduloUsuarios/crearCliente.html')
+
+#Vista de formulario para modificar cliente
+@group_required('Jefe')
+def modificarClientes(request):
+    if request.method == 'POST':
+        pk = request.POST['idCliente']
+        cliente = get_object_or_404(Cliente, idCliente=pk)
+        cliente.nombreCliente = request.POST['nombres']
+        cliente.apellidoCliente = request.POST['apellidos']
+        cliente.duiCliente = request.POST['dui']
+        cliente.nacionalidadCliente = request.POST['nacionalidad']
+        cliente.telefonoCliente = request.POST.get('telefono')
+        cliente.emailCliente = request.POST['email']
+
+        # Validaciones
+        # No campos vacíos
+        if not cliente.nombreCliente or not cliente.apellidoCliente or not cliente.emailCliente or not cliente.duiCliente or not cliente.telefonoCliente or not cliente.nacionalidadCliente:
+            messages.error(request, 'Por favor complete todos los campos obligatorios')
+            return render(request, 'moduloUsuarios/modificarCliente.html', {'cliente': cliente})
+        
+        # Verificar que el DUI es único
+        if Cliente.objects.filter(duiCliente=cliente.duiCliente).exclude(idCliente=pk).exists():
+            messages.error(request, 'Error al ingresar documento de identidad, el número ingresado ya está registrado')
+            return render(request, 'moduloUsuarios/modificarCliente.html', {'cliente': cliente})
+        
+        # Verificar email
+        if Cliente.objects.filter(emailCliente=cliente.emailCliente).exclude(idCliente=pk).exists():
+            messages.error(request, 'La dirección de correo electrónico ya está en uso, por favor ingrese otro email')
+            return render(request, 'moduloUsuarios/modificarCliente.html', {'cliente': cliente})
+        
+        # Validación del formato del email
+        try:
+            validate_email(cliente.emailCliente)
+        except ValidationError:
+            messages.error(request, 'El formato del correo electrónico no es válido')
+            return render(request, 'moduloUsuarios/modificarCliente.html', {'cliente': cliente})
+        
+        # Validación de parámetros
+        if len(cliente.nombreCliente) > 50:
+            messages.error(request, 'Nombre demasiado extenso, trate de usar abreviaciones')
+            return render(request, 'moduloUsuarios/modificarCliente.html', {'cliente': cliente})
+        
+        if len(cliente.apellidoCliente) > 50:
+            messages.error(request, 'Apellido demasiado extenso, trate de usar abreviaciones')
+            return render(request, 'moduloUsuarios/modificarCliente.html', {'cliente': cliente})
+        
+        if len(cliente.duiCliente) != 10:
+            messages.error(request, 'Número de documento de identidad no válido')
+            return render(request, 'moduloUsuarios/modificarCliente.html', {'cliente': cliente})
+        
+        if len(cliente.telefonoCliente) != 9:
+            messages.error(request, 'Número de teléfono no válido')
+            return render(request, 'moduloUsuarios/modificarCliente.html', {'cliente': cliente})
+        
+        try:
+            cliente.save()
+            return redirect("/usuarios/crudCliente/")
+        except Exception as e:
+            messages.error(request, f'Error al modificar el cliente: {str(e)}')
+            return render(request, 'moduloUsuarios/modificarCliente.html', {'cliente': cliente})
+
+    return redirect("/usuarios/crudCliente/")
+
+#verificar cliente
+@group_required('Jefe')
+def verificarCliente(request, pk):
+    cliente = get_object_or_404(Cliente, idCliente=pk)
+    return render(request, 'moduloUsuarios/inspeccionarCliente.html', {'cliente': cliente})
+
+#eliminar
+@group_required('Jefe')
+def deleteCliente(request, pk):
+    cliente = get_object_or_404(Cliente, idCliente=pk)
+    if request.method == 'POST':
+        cliente.estado = False
+        cliente.save()
+        return redirect('/usuarios/crudCliente/')
+    return render(request, 'moduloUsuarios/eliminarCliente.html',{'cliente':cliente})
+
+#vista para ver usuario
+@group_required('Jefe')
+def verCliente(request, pk):
+    cliente = get_object_or_404(Cliente, idCliente=pk)
+    return render(request, 'moduloUsuarios/modificarCliente.html', {'cliente': cliente})
+
+
 #---------------------------Gestion de empleados---------------------------------
 #Vista para listar empleados
 @method_decorator(group_required('Jefe'), name='dispatch')
@@ -44,6 +211,7 @@ class crud_empleados(ListView):
         return CustomUser.objects.filter(is_superuser=False, is_active=True).order_by('date_joined')
 
 #vista para crear empleados
+@method_decorator(group_required('Jefe'), name='dispatch')
 class crear_empleado(CreateView):
     form_class = empleadoForm
     success_url = reverse_lazy('moduloUsuarios:crud_empleado')
@@ -87,6 +255,7 @@ class modificar_empleado(UpdateView):
 
 #--------------------------- Modulo Repartidor----------------------
 #vista crear
+@method_decorator(group_required('Jefe'), name='dispatch')
 class crear_repartidor(CreateView):
     form_class = RepartidorForm
     success_url = reverse_lazy('moduloUsuarios:crud_repartidor')
@@ -141,53 +310,3 @@ def eliminar_repartidor(request, pk):
 
     return render(request, "moduloUsuarios/eliminarRepartidor.html", {"repartidor": repartidor})
 	
- 
- #--------------------------- Modulo Gestion de Cliente Modificado----------------------
- #Vista para listar clientes
-class crud_cliente(ListView):
-    model = Cliente
-    template_name = "moduloUsuarios/crudCliente.html"
-    context_object_name = "lista_cliente"
-
-
-
-#vista para crear clientes
-class crear_cliente(CreateView):
-    form_class = clienteForm
-    success_url = reverse_lazy('moduloUsuarios:crud_cliente')
-    template_name = 'moduloUsuarios/crearCliente.html'
-
-#Eliminar cliente
-def eliminar_cliente(request,pk):
-    cliente = get_object_or_404(Cliente, pk=pk)
-
-    if request.method == "POST":
-        try:
-            cliente.delete()
-            #mensaje de exito
-            messages.success(request, 'Cliente eliminado correctamente!')
-        except Exception as e:
-            #mensaje de error
-            messages.error(request, f'Error al eliminar el cliente seleccionado: {str(e)}')
-
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            return JsonResponse({'message': 'Cliente eliminado correctamente!'})
-        return redirect("moduloUsuarios:crud_cliente")
-    return render(request, "moduloUsuarios/eliminarEmpleado.html", {"cliente": cliente})
-
-#vista inspeccionar Cliente
-def ver_cliente(request, pk):
-    cliente = get_object_or_404(Cliente, pk=pk)
-    return render(request, 'moduloUsuarios/inspeccionarCliente.html',{'cliente': cliente})
-
-
-#Vista modificar datps cliente 
-class modificar_cliente(UpdateView):
-    template_name = "moduloUsuarios/modificarCliente.html"
-    model = Cliente
-    form_class = clienteUpdateForm
-    success_url = reverse_lazy("moduloUsuarios:crud_cliente")
-
-    def form_valid(self, form):
-        messages.success(self.request, "El cliente seleccionado se ha modificado exitosamente")
-        return super().form_valid(form)
