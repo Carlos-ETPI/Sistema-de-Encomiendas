@@ -12,13 +12,13 @@ class CustomUser(AbstractUser):
     telefono =  models.CharField(max_length=10, blank=True, null=False)
 
 class Cliente(models.Model):
-    id_cliente=models.BigAutoField(primary_key=True)
-    nombre_cliente=models.CharField(max_length=50,blank=True, null=False)
-    apellido_cliente=models.CharField(max_length=50,blank=True, null=False)
-    dui_cliente=models.CharField(max_length=10,blank=True, null=False)
-    nacionalidad_cliente=models.CharField(max_length=50,blank=True, null=False)
-    telefono_cliente=models.CharField(max_length=10,blank=True, null=False)
-    email_cliente=models.CharField(max_length=50,blank=True, null=False)
+    idCliente=models.BigAutoField(primary_key=True)
+    nombreCliente=models.CharField(max_length=50,blank=True, null=False)
+    apellidoCliente=models.CharField(max_length=50,blank=True, null=False)
+    duiCliente=models.CharField(max_length=10,blank=True, null=False)
+    nacionalidadCliente=models.CharField(max_length=50,blank=True, null=False)
+    telefonoCliente=models.CharField(max_length=10,blank=True, null=False)
+    emailCliente=models.CharField(max_length=50,blank=True, null=False)
     estado = models.BooleanField('estado', default=True)
     
 class Repartidor(models.Model):

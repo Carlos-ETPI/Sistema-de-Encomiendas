@@ -39,20 +39,20 @@
             </tr>
         </thead>
         <tbody>
-            {% for cliente in lista_cliente %}
+            {% for cliente in client_list %}
             <tr>
-                <td>{{cliente.id_cliente}}</td>
-                <td>{{cliente.nombre_cliente}}</td>
-                <td>{{cliente.apellido_cliente}}</td>
-                <td>{{cliente.dui_cliente}}</td>
-                <td>{{cliente.telefono_cliente}}</td>
-                <td>{{cliente.email_cliente}}</td>
+                <td>{{cliente.idCliente}}</td>
+                <td>{{cliente.nombreCliente}}</td>
+                <td>{{cliente.apellidoCliente}}</td>
+                <td>{{cliente.duiCliente}}</td>
+                <td>{{cliente.telefonoCliente}}</td>
+                <td>{{cliente.emailCliente}}</td>
                 <td class="d-flex justify-content-center">
-                    <a href="{% url 'moduloUsuarios:modificarCliente' cliente.id_cliente %}" class="icon-link text-primary mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
+                    <a href="{% url 'moduloUsuarios:inspeccionarCliente' cliente.idCliente %}" class="icon-link text-primary mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
                         <i class="fas fa-user-edit"></i>
                         <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Modificar</span>
                     </a>
-                    <a href="{% url 'moduloUsuarios:verCliente' cliente.id_cliente%}" class="icon-link text-success mx-auto mx-2 d-flex flex-column position-relative"  style="font-size: 20px;">
+                    <a href="{% url 'moduloUsuarios:verCliente' cliente.idCliente%}" class="icon-link text-success mx-auto mx-2 d-flex flex-column position-relative"  style="font-size: 20px;">
                         <i class="fa fa-id-card" aria-hidden="true"></i>
                         <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Ver</span>
                     </a>

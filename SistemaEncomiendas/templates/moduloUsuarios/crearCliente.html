@@ -1,43 +1,39 @@
-<!--Nueva Vista HTML para crear Cliente -->
 {% extends "base4.html" %}
-{% block titulo %}Crear Nuevo Cliente{% endblock titulo %}
+{% load static %}
+{% block titulo %}Crear nuevo Cliente{% endblock titulo %}
+
 
 {% block body %}
 <div class="container mt-3">
-    <div class="row bg-secondary py-1">
-        <h3 class="mb-1 text-white">Cliente Nuevo</h3>
-    </div>
-    <div class="row align-items-center border mt-1" style="background-color: #F5F0EF;">
-        <div class="col-md-6">
-            <div class="d-flex">
+    <div class=" row bg-secondary py-1" >
+        <h3 class="mb-1 text-white">Clientes</h3>
+    </div >
+    <div class=" row align-items-center border mt-1 " style="background-color: #F5F0EF;">
+        <div class="col-md-6  ">
+            <div class="d-flex ">
                 <p class="mb-1 font-weight-bold">
-                    <b><i class="fas fa-check-circle"></i> Registro Para Clientes</b>
-                </p>
+                    <b>
+                        <i class="fas fa-check-circle"></i>  Registrar Clientes</b>
+                </p> 
             </div>
         </div>
-        <div class="col-md-6 mb-1">
-            <div class="d-flex justify-content-end">
-                <a href="{% url 'moduloUsuarios:crudCliente' %}">
-                    <button type="button" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i>  Regresar
-                    </button>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-<section class="vh-100">
-    <div class="container py-3">
-        <div class="row d-flex justify-content-center h-100">
-            <div class="col col-12">
-                <div class="card" style="border-radius: 1rem;">
-                    <div class="row g-0">
-                        <div class="col d-flex align-items-center" style="background-color: #F5F0EF; border-radius: 1rem;">
-                            <div class="card-body p-4 p-lg-5 text-black d-flex justify-content-center align-items-center">
-                                <form class="w-75" method="post">
+    </div >
+</div >
+<section class="vh-100" >
+    <div class="container py-3 " >
+        <div class="row d-flex justify-content-center  h-100"  >
+            <div class="col col-12" >
+                
+                <div class="card" style="border-radius: 1rem;"  >
+                    <div class="row g-0" >
+                        <div class="col d-flex align-items-center " style="background-color: #F5F0EF;border-radius: 1rem 1rem 1rem 1rem; "><!--form-->
+                            <div class="card-body p-4 p-lg-5 text-black d-flex justify-content-center align-items-center" >
+                                
+                                <form class="w-75" action="/usuarios/crearCliente/" method="POST" autocomplete="off">
                                     {% csrf_token %}
-                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;"><b>Formulario Para Registro de Clientes</b></h5>
+                                    <h5 class="fw-normal  mb-3 pb-3 " style="letter-spacing: 1px; ;"><b>Formulario de registro para Clientes </b> </h5>
                                     <hr>
+                                    
                                     {% if form.errors %}
                                         {% for field in form  %}
                                             {% if field.errors %}
@@ -47,46 +43,52 @@
                                             
                                             {% endif %}
                                         {% endfor %} 
-                                    {% endif %}
+                                        {% endif %}
                                     <div class="input-group input-group mb-3">
-                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Nombres: </b></span>
-                                        {{ form.nombre_cliente }}
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Nombres</b></span>
+                                        <input type="text" autocomplete="off" name="nombres" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" maxlength="50" placeholder="Juan Antonio">
                                     </div>
                                     <div class="input-group input-group mb-3">
-                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Apellidos: </b></span>
-                                        {{ form.apellido_cliente }}
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Apellidos</b></span>
+                                        <input type="text" autocomplete="off" name="apellidos" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" maxlength="50" placeholder="Perez Perez">
                                     </div>
                                     <div class="input-group input-group mb-3">
-                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>DUI: </b></span>
-                                        {{ form.dui_cliente }}
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>DUI</b></span>
+                                        <input type="text" id="DUI" autocomplete="off" name="dui" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" maxlength="10" placeholder="12345678-0">
                                     </div>
                                     <div class="input-group input-group mb-3">
-                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Nacionalidad: </b></span>
-                                        {{ form.nacionalidad_cliente }}
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Nacionalidad</b></span>
+                                        <input type="text" autocomplete="off" name="nacionalidad" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"maxlength="50" placeholder="Salvadoreño">
                                     </div>
                                     <div class="input-group input-group mb-3">
-                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Teléfono: </b></span>
-                                        {{ form.telefono_cliente }}
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Telefono</b></span>
+                                        <input type="text" id="tel" autocomplete="off" name="telefono" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" maxlength="10" placeholder="0000-0000">
                                     </div>
+
                                     <div class="input-group input-group mb-3">
-                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Email: </b></span>
-                                        {{ form.email_cliente }}
+                                        <span class="input-group-text" id="inputGroup-sizing-sm"><b>Email</b></span>
+                                        <input type="text" autocomplete="off" name="email" required class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="gf21007@gmail.com">
                                     </div>
-                                    <div class="pt-1 mb-4 d-flex justify-content-end">
-                                        <button class="btn btn-success btn-lg btn-block me-2" type="submit">
-                                            <i class="far fa-save"></i> Guardar
-                                        </button>
-                                        <a href="{% url 'moduloUsuarios:crudCliente' %}" class="btn btn-danger btn-lg btn-block">
-                                            <i class="fas fa-times"></i> Cancelar
+                                    <div class="pt-1 mb-4  d-flex justify-content-end">
+                                        <button class="btn btn-success btn-lg btn-block me-2" type="submit"><i class="far fa-save "></i>  Guardar</button>
+                                        <a href="/usuarios/crudCliente">
+                                        <button class="btn btn-danger btn-lg btn-block" type="button"><i class="fas fa-times"></i>  Cancelar</button>
                                         </a>
                                     </div>
+                                    
                                 </form>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
     </div>
 </section>
-{% endblock body %}
+
+{% endblock body%}
+{% block javaS %}
+    <script src="{%static 'js/ValidacionNoVacio'%}"></script>
+{% endblock javaS %}
