@@ -17,7 +17,7 @@
         </div>
         <div class="col-md-6  mb-1">
             <div class="d-flex justify-content-end   ">
-                <a href="{% url 'moduloUsuarios:crear_cliente' %}">
+                <a href="{% url 'moduloUsuarios:newCliente' %}">
                     <button type="button" class="btn btn-secondary mt-1">
                         <i class="fas fa-plus-circle"></i>  Agregar
                     </button>
@@ -48,11 +48,11 @@
                 <td>{{cliente.telefono_cliente}}</td>
                 <td>{{cliente.email_cliente}}</td>
                 <td class="d-flex justify-content-center">
-                    <a href="{% url 'moduloUsuarios:modificar_cliente' cliente.id_cliente %}" class="icon-link text-primary mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
+                    <a href="{% url 'moduloUsuarios:modificarCliente' cliente.id_cliente %}" class="icon-link text-primary mx-auto mx-2 d-flex flex-column position-relative" style="font-size: 20px;">
                         <i class="fas fa-user-edit"></i>
                         <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Modificar</span>
                     </a>
-                    <a href="{% url 'moduloUsuarios:ver_cliente' cliente.id_cliente%}" class="icon-link text-success mx-auto mx-2 d-flex flex-column position-relative"  style="font-size: 20px;">
+                    <a href="{% url 'moduloUsuarios:verCliente' cliente.id_cliente%}" class="icon-link text-success mx-auto mx-2 d-flex flex-column position-relative"  style="font-size: 20px;">
                         <i class="fa fa-id-card" aria-hidden="true"></i>
                         <span class="tooltip-text position-absolute top-0 start-50 translate-middle badge bg-dark text-white">Ver</span>
                     </a>
@@ -84,7 +84,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <form id="eliminarForm" method="POST"  action="{% url 'moduloUsuarios:eliminar_cliente' 1%}">
+                <form id="eliminarForm" method="POST"  action="{% url 'moduloUsuarios:deleteCliente' 1%}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">Eliminar</button>
                 </form>

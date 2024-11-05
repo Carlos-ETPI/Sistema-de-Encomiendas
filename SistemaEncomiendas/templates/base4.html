@@ -80,11 +80,19 @@
                                 <li><a href="{% url 'moduloUsuarios:crud_repartidor' %}" class="dropdown-item">Repartidor</a></li>  
                             </ul>
                         </div>
-                        <a href="{%url 'moduloViajes:filtroviajes'%}" class="nav-item nav-link">Viajes</a>
+                        <a href="{%url 'moduloViajes:listaviajes'%}" class="nav-item nav-link">Viajes</a>
                         <a href="{%url 'moduloOrdPaq:crudPedido' %}" class="nav-item nav-link ">Pedidos</a>
                         <a href="{% url 'moduloEntRec:ListarRutas'%}" class="nav-item nav-link">Rutas</a>
                         
-                        <a href="contact.html" class="nav-item nav-link">Articulos</a>
+                        <a href="{%url 'moduloArticulos:cotizacion'%}" class="nav-item nav-link">Cotizacion</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Reportes
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a href="{% url 'moduloReportes:reporte_costos_viajes' %}" class="dropdown-item">Viajes</a></li>  
+                            </ul>
+                        </div>
                         {% endif %}
                         {% if not user.is_authenticated %}
                         <a href="{% url 'seguridad_app:inicio_sesion' %}" class="nav-link text-blue d-flex align-items-center">

@@ -76,7 +76,7 @@
                                     <div class="d-flex align-items-center mb-3">
                                         <div id="tipo-marca" class="input-group me-2" style="display: none; width: 50%;">
                                             <span class="input-group-text"><b>Tipo de Marca</b></span>
-                                            <select id="tipo-marcas" name="tipo-marca" class="form-control" aria-label="Sizing example input" onchange="actualizarSelectorMarcas(), actualizarSelectorDescripcionArticulo(), mostrarCosto()">
+                                            <select id="tipo-marcas" name="tipo-marca" class="form-control" aria-label="Sizing example input" onchange="actualizarSelectorMarcas(), actualizarSelectorDescripcionArticulo()">
                                                 <option value="">Selecciona un tipo</option>
                                                 <option value="Lujo">Lujo</option>
                                                 <option value="Prestigio">Prestigio</option>
@@ -240,7 +240,7 @@
      var articuloSelector = document.getElementById("id_ti_articulo");
  
      // Limpiar las opciones de Selector B
-     articuloSelector.innerHTML = '<option value="">Selecciona una marca</option>';
+     articuloSelector.innerHTML = '<option value="">Selecciona una descripcion</option>';
  
      // Si se selecciona "Otras", no hacer nada más
      if (tipoMarca === "") {

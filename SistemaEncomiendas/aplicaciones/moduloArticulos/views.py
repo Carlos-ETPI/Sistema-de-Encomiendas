@@ -143,8 +143,8 @@ def cotizacion(request):
     if request.method == 'POST':
         
         id_servicio = request.POST.get('id_servicio')
-        categoria_articulo_id = request.POST.get('id_ti_articulo')
-        marca_id = request.POST.get('id_lis_marcas')
+        categoria_articulo_id = request.POST.get('id_ti_articulo') or None
+        marca_id = request.POST.get('id_lis_marcas') or None
         nombre_articulo = request.POST.get('nombre_articulo')
         cantidad = request.POST.get('cantidad')
         peso = request.POST.get('peso')
@@ -152,10 +152,13 @@ def cotizacion(request):
 
 
         servicio = Servicio.objects.get(id_servicio=id_servicio)
-        tipo=TipoArticulo.objects.get(id_ti_articulo=categoria_articulo_id)
+        tipo=None
+        impuestos=Decimal(costo)*Decimal(0.13)
+        if categoria_articulo_id:
+            tipo=TipoArticulo.objects.get(id_ti_articulo=categoria_articulo_id)
+            impuestos=tipo.cip*Decimal(0.13)
         
         costoEncomiendas = servicio.precio_libra * Decimal(peso) + Decimal(costo)
-        impuestos=tipo.cip*Decimal(0.13)
         totalcosto=costoEncomiendas+impuestos
 
         
@@ -175,7 +178,7 @@ def cotizacion(request):
         
         # Guardar el nuevo artículo en la base de datos
         articulo.save()
-        messages.success(request, 'Articulo agregado correctamente!')
+        messages.success(request, 'Cotizacion exitosa!')
         return redirect('/articulos/cotizacion/vista')
     return render(request, 'moduloArticulos/cotizacion.html', {'mensaje':mensaje, 'servicios':servicios_list})
 
