@@ -2,14 +2,13 @@ from django.urls import path
 from . import views
 app_name = 'moduloUsuarios'
 urlpatterns = [
-    path('',views.crudUsuarios, name="users"),
-    path('agregar/',views.newuser, name="agregar"),
-    path('create/',views.agregarUsuario, name="newuser"),
-    path('ver/<int:pk>/',views.verUsuario, name="verUsuario"),
-    path('inspeccionarUsuario/<int:pk>/',views.inspeccionarUsuario, name="inspeccionarUsuario"),
-    path('modificar/',views.modUsuario, name="moduser"),
-    path('eliminar/<int:pk>/', views.eliminar_usuario, name='eliminar_usuario'),
-    
+    #Vistas para empleados modificadas
+    path("crud_empleado/", views.crud_empleados.as_view(), name="crud_empleado"),
+    path("crear_empleado/", views.crear_empleado.as_view(),name="crear_empleado"),
+    path("eliminar_empleado/<int:pk>/",views.eliminar_empleado,name="eliminar_empleado"),
+    path('ver_empleado/<int:pk>/',views.ver_empleado, name="ver_empleado"),
+    path('modificar_empleado/<int:pk>/',views.modificar_empleado.as_view(),name='modificar_empleado'),
+
      #Modulo de Gestion de Cliente 
     path('crudCliente/', views.crudCliente, name="crudCliente"),
     path('agregarCliente/',views.newCliente, name="newCliente"),
