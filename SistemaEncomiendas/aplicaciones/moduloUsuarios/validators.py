@@ -1,13 +1,12 @@
 import re
 from django.core.exceptions import ValidationError
+from ..moduloUsuarios.models import Repartidor
 
 #funcion verifica que el dui tenga el formato correcto y verifica si el dui es valido
 def validar_dui(dui):
     # Verificar el formato del DUI usando una expresión regular
     if not re.match(r'^\d{8}-\d$', dui):
         raise ValidationError("El formato del DUI es inválido. Debe ser ########-#.")
-
-    # Separar el número y el dígito verificador
     numero, digito_verificador = dui.split('-')
     numero = list(map(int, numero))
     digito_verificador = int(digito_verificador)
@@ -47,3 +46,7 @@ def validar_vacio(data):
     # Verificar que la data no esté vacía
     if not data or data.strip() == "":
         raise ValidationError("El campo no puede estar vacío.")
+    
+def validar_dui_unico(dui):
+        if Repartidor.objects.filter(DUI_persona=dui).exists():
+            raise ValidationError(f'El dui {dui} ya existe. Por favor, elige uno diferente.')
