@@ -4,19 +4,23 @@ from .models import Repartidor,Cliente, CustomUser
 
 import re
 from django.core.exceptions import ValidationError
-from .validators import validar_dui,validar_telefono, validar_password
+from .validators import validar_dui,validar_telefono, validar_password,validar_dui_unico
 
 
 
 class RepartidorForm(forms.ModelForm):
     nombres = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombres'}))
     apellidos = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Apellidos'}))
-    DUI_persona = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'DUI','id':'DUI','maxlength':'10'}))
+    DUI_persona = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'DUI','id':'DUI','maxlength':'10'}),validators=[validar_dui_unico,validar_dui])
     telefono_repartidor = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Teléfono','id':'tel','maxlength':'9'}),validators=[validar_telefono])
+
     class Meta:
         model = Repartidor
         fields = [ 'nombres', 'apellidos', 'DUI_persona', 'telefono_repartidor']
 
+
+
+        
 #formulario para crear empleados
 class empleadoForm(forms.ModelForm):
     nombres = forms.CharField(
@@ -91,12 +95,7 @@ class empleadoForm(forms.ModelForm):
             raise ValidationError('El nombre de usuario no esta disponible.')
         return username
 
-    #dui unico
-    def clean_dui(self):
-        dui = self.cleaned_data.get('dui')
-        if CustomUser.objects.filter(dui=dui).exists():
-            raise ValidationError('El dui no esta disponible.')
-        return dui
+   
     
     #formato de contraseña
     def clean_password(self):

@@ -20,12 +20,15 @@ class Cliente(models.Model):
     telefonoCliente=models.CharField(max_length=10,blank=True, null=False)
     emailCliente=models.CharField(max_length=50,blank=True, null=False)
     estado = models.BooleanField('estado', default=True)
+    def __str__(self):
+            return f"{self.nombreCliente} {self.apellidoCliente}"  
     
 class Repartidor(models.Model):
     id_repartidor = models.AutoField(primary_key=True)
     nombres=models.CharField(max_length=50)
     apellidos=models.CharField(max_length=50)
-    DUI_persona=models.CharField(max_length=10,unique=True)
+    DUI_persona=models.CharField(max_length=10,unique=True
+        )
     telefono_repartidor=models.CharField(max_length=10, blank=True, null=False)
     def __str__(self):
             return f"{self.nombres} {self.apellidos}"    
